@@ -1,0 +1,5 @@
+setInterval(() => {
+  document.getElementById("hr").value = Math.floor(Math.random()*100)+50;
+  document.getElementById("spo2").value = Math.floor(Math.random()*10)+90;
+  document.getElementById("bp").value = Math.floor(Math.random()*80)+100;
+}, 3000);
