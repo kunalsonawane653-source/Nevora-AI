@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Nevora AI Dashboard</title>
+  <style>
+    body { font-family: Arial; text-align: center; }
+    input { margin: 5px; padding: 8px; }
+    button { padding: 10px; }
+  </style>
+</head>
+<body>
+
+<h2>Nevora AI - Patient Monitor</h2>
+
+<input id="hr" placeholder="Heart Rate"><br>
+<input id="spo2" placeholder="SpO2"><br>
+<input id="bp" placeholder="BP"><br>
+
+<button onclick="sendData()">Analyze</button>
+
+<h3 id="result"></h3>
+
+<script>
+function sendData() {
+  fetch("http://127.0.0.1:8000/analyze", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      hr: parseInt(document.getElementById("hr").value),
+      spo2: parseInt(document.getElementById("spo2").value),
+      bp: parseInt(document.getElementById("bp").value)
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("result").innerText = data.alerts.join(", ");
+  });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,5 @@
+if(data.alerts.includes("Stable")){
+  document.getElementById("result").style.color = "green";
+} else {
+  document.getElementById("result").style.color = "red";
+}
