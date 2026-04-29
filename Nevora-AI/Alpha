@@ -1,0 +1,2798 @@
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Nasal Health (Sinusitis, Common Cold, Epistaxis)
+import datetime
+
+def nasal_health_algorithm(symptoms_input, environmental_factors):
+    """
+    Logic for Nasal issues based on Images 98 to 101.
+    Focuses on sinus inflammation, congestion, and nasal bleeding.
+    """
+    result = {
+        "condition": "ENT (Nasal) Health",
+        "status": "Normal",
+        "severity": "Low",
+        "actions": []
+    }
+
+    # Core Symptoms from Images 98, 99, 100
+    nasal_signs = {
+        "facial_pain_pressure", "nasal_congestion", "thick_discolored_mucus",
+        "loss_of_smell", "postnasal_drip", "nose_bleeding", "frequent_sneezing"
+    }
+
+    # Detection logic
+    detected_signs = symptoms_input.intersection(nasal_signs)
+    
+    if detected_signs:
+        # 1. Sinusitis Logic (Image 98 & 99)
+        if "facial_pain_pressure" in detected_signs or "thick_discolored_mucus" in detected_signs:
+            result["condition"] = "SINUSITIS SUSPECTED"
+            result["status"] = "SINUS INFLAMMATION"
+            result["actions"] = [
+                "1. STEAM INHALATION: Inhale steam 2-3 times a day to clear nasal passages (Image 99).",
+                "2. HYDRATION: Drink warm fluids to thin the mucus.",
+                "3. WARM COMPRESS: Apply a warm cloth to the cheeks and nose to relieve pressure.",
+                "4. NASAL RINSE: Use a saline spray or neti pot to flush out irritants.",
+                "5. CONSULT: If fever is high or symptoms last >10 days, see an ENT specialist."
+            ]
+
+        # 2. Epistaxis (Nose Bleeding) Logic (Image 101)
+        elif "nose_bleeding" in detected_signs:
+            result["condition"] = "EPISTAXIS (NOSE BLEED)"
+            result["status"] = "ACTIVE BLEEDING / RECOVERY"
+            result["actions"] = [
+                "1. FIRST AID: Sit upright and lean forward slightly. Pinch the soft part of the nose for 10-15 mins (Image 101).",
+                "2. COLD COMPRESS: Apply ice to the bridge of the nose to constrict blood vessels.",
+                "3. MOISTURIZE: Use a saline gel or a thin layer of petroleum jelly inside the nostrils.",
+                "4. AVOID: Do not pick or blow your nose for 24 hours after bleeding stops.",
+                "5. URGENT: If bleeding lasts >20 mins or follows a heavy injury, go to the ER."
+            ]
+
+        # 3. Common Cold / Allergy
+        else:
+            result["condition"] = "COMMON COLD / ALLERGIC RHINITIS"
+            result["status"] = "NASAL CONGESTION"
+            result["actions"] = [
+                "1. REST: Ensure adequate sleep to help the immune system recover.",
+                "2. ANTI-HISTAMINES: Use over-the-counter allergy relief if sneezing is frequent.",
+                "3. HUMIDIFIER: Use a humidifier to keep the air moist, especially at night."
+            ]
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Nasal & Sinus Analysis ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Facial pressure and thick mucus
+    test_symptoms = {"facial_pain_pressure", "nasal_congestion", "thick_discolored_mucus"}
+    
+    report = nasal_health_algorithm(test_symptoms, {})
+
+    print("Condition: {0}".format(report['condition']))
+    print("Status: {0}".format(report['status']))
+    print("\n[NASAL CARE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Throat Health (Tonsillitis, Hoarseness, Thyroid)
+import datetime
+
+def throat_health_algorithm(symptoms_input, vitals_input):
+    """
+    Logic for Throat issues based on Images 92 to 97.
+    Focuses on infection, vocal cord strain, and glandular swelling.
+    """
+    result = {
+        "condition": "ENT (Throat) Health",
+        "status": "Normal",
+        "severity": "Low",
+        "actions": []
+    }
+
+    # Core Symptoms from Images 92, 93, 94
+    throat_signs = {
+        "swollen_tonsils", "white_yellow_patches_on_tonsils", "sore_throat",
+        "difficulty_swallowing", "hoarseness_of_voice", "lump_in_neck",
+        "persistent_cough", "swollen_lymph_nodes"
+    }
+
+    # Detection logic
+    detected_signs = symptoms_input.intersection(throat_signs)
+    
+    if detected_signs:
+        # 1. Tonsillitis Logic (Image 92 & 93)
+        if "swollen_tonsils" in detected_signs or "white_yellow_patches_on_tonsils" in detected_signs:
+            result["condition"] = "TONSILLITIS SUSPECTED"
+            result["status"] = "INFLAMMATORY INFECTION"
+            result["actions"] = [
+                "1. GARGLE: Saltwater gargles 3-4 times a day to reduce swelling (Image 93).",
+                "2. HYDRATION: Drink warm fluids like herbal tea or warm water with honey.",
+                "3. REST: Give your voice rest and avoid cold/irritating foods.",
+                "4. CONSULT: See an ENT specialist if breathing is difficult or fever persists."
+            ]
+
+        # 2. Hoarseness/Laryngitis Logic (Image 95)
+        elif "hoarseness_of_voice" in detected_signs:
+            result["condition"] = "LARYNGITIS / VOCAL CORD STRAIN"
+            result["status"] = "VOICE DISORDER"
+            result["actions"] = [
+                "1. VOICE REST: Avoid speaking or whispering to let vocal cords heal (Image 95).",
+                "2. STEAM INHALATION: Use a humidifier or inhale steam to moisten the throat.",
+                "3. AVOID IRRITANTS: Stop smoking and avoid caffeine/alcohol.",
+                "4. MONITOR: If hoarseness lasts more than 2 weeks, check for vocal nodules."
+            ]
+
+        # 3. Thyroid/Neck Swelling Logic (Image 96 & 97)
+        elif "lump_in_neck" in detected_signs:
+            result["condition"] = "THYROID SWELLING / GOITER SUSPECTED"
+            result["severity"] = "MEDIUM"
+            result["actions"] = [
+                "1. BLOOD TEST: Check TSH, T3, and T4 levels immediately (Image 96).",
+                "2. IMAGING: Thyroid Ultrasound to check for nodules or enlargement (Image 97).",
+                "3. CONSULT: See an Endocrinologist for professional evaluation.",
+                "4. OBSERVE: Note if there is any rapid change in the size of the lump."
+            ]
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Throat & Neck Analysis ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Swollen tonsils with difficulty swallowing
+    test_symptoms = {"swollen_tonsils", "difficulty_swallowing", "sore_throat"}
+    
+    report = throat_health_algorithm(test_symptoms, {})
+
+    print("Condition: {0}".format(report['condition']))
+    print("Status: {0}".format(report['status']))
+    print("\n[THROAT CARE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Stomach Health (Acidity, Ulcer, Gastritis)
+import datetime
+
+def stomach_health_algorithm(symptoms_input, lifestyle_input):
+    """
+    Logic for Stomach issues based on Images 89, 90, and 91.
+    Focuses on acid reflux, mucosal lining damage, and gastric pain.
+    """
+    result = {
+        "condition": "Digestive Health",
+        "status": "Normal",
+        "severity": "Low",
+        "actions": []
+    }
+
+    # Symptoms from Image 90 & 91
+    stomach_signs = {
+        "burning_sensation_chest", "upper_abdominal_pain", "bloating_gas",
+        "nausea_after_meals", "acid_reflux", "loss_of_appetite", "vomiting_blood"
+    }
+
+    # Risk Factors from Image 89
+    spicy_food = lifestyle_input.get("spicy_oily_food", False)
+    irregular_meals = lifestyle_input.get("irregular_meal_timing", False)
+    stress_level = lifestyle_input.get("high_stress", False)
+
+    # Detection logic
+    detected_signs = symptoms_input.intersection(stomach_signs)
+    
+    if detected_signs:
+        if "vomiting_blood" in detected_signs or "upper_abdominal_pain" in detected_signs:
+            result["condition"] = "PEPTIC ULCER SUSPECTED"
+            result["severity"] = "HIGH"
+            result["status"] = "REQUIRES ENDOSCOPY"
+        elif "burning_sensation_chest" in detected_signs:
+            result["condition"] = "ACIDITY / GERD"
+            result["status"] = "ACID REFLUX ACTIVE"
+        else:
+            result["condition"] = "GASTRITIS"
+            result["status"] = "STOMACH LINING INFLAMMATION"
+
+        result.update({
+            "actions": [
+                "1. DIET: Avoid spicy, oily, and highly acidic foods (Image 89).",
+                "2. MEAL TIMING: Eat small, frequent meals and avoid lying down immediately after eating.",
+                "3. HYDRATION: Drink adequate water; coconut water can help soothe the stomach lining.",
+                "4. DIAGNOSIS: Consult a Gastroenterologist for a possible H. pylori test or Endoscopy (Image 90).",
+                "5. MEDICATION: Antacids or PPIs (Proton Pump Inhibitors) as prescribed.",
+                "6. STRESS MGMT: Practice relaxation techniques as stress increases acid production (Image 91)."
+            ]
+        })
+
+        if spicy_food or irregular_meals:
+            result["actions"].insert(0, "ADVICE: Lifestyle triggers detected. Fix meal timings to prevent acid buildup.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Stomach Health Analysis ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Burning chest pain after spicy food
+    test_symptoms = {"burning_sensation_chest", "bloating_gas"}
+    test_lifestyle = {"spicy_oily_food": True, "irregular_meal_timing": True}
+    
+    report = stomach_health_algorithm(test_symptoms, test_lifestyle)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Severity: {0}".format(report['severity']))
+    print("Status: {0}".format(report['status']))
+    print("\n[GASTRIC CARE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Arthritis & Joint Health Monitoring
+import datetime
+
+def arthritis_algorithm(symptoms_input, patient_data):
+    """
+    Logic for Arthritis based on Images 89, 90, and 91.
+    Focuses on Osteoarthritis, Rheumatoid Arthritis, and joint inflammation.
+    """
+    result = {
+        "condition": "Joint & Bone Health",
+        "status": "Stable",
+        "type": "General Joint Pain",
+        "actions": []
+    }
+
+    # Core Symptoms from Image 90 & 91
+    arthritis_signs = {
+        "joint_pain_stiffness", "swelling_around_joints", "decreased_range_of_motion",
+        "redness_warmth_at_joint", "morning_stiffness_long_duration", "joint_grating_sound"
+    }
+
+    # Extracting age and specific joint location
+    age = patient_data.get("age", 17)
+    joint_location = patient_data.get("pain_location", "general")
+
+    # Detection logic
+    detected_signs = symptoms_input.intersection(arthritis_signs)
+    
+    if detected_signs:
+        # Differentiating between Osteo and Rheumatoid (Image 90 & 91)
+        if "morning_stiffness_long_duration" in detected_signs or "redness_warmth_at_joint" in detected_signs:
+            result["type"] = "RHEUMATOID ARTHRITIS SUSPECTED (Autoimmune)"
+            result["status"] = "INFLAMMATORY FLARE"
+        elif age > 50 or "joint_grating_sound" in detected_signs:
+            result["type"] = "OSTEOARTHRITIS SUSPECTED (Wear and Tear)"
+            result["status"] = "CHRONIC DEGENERATION"
+
+        result.update({
+            "condition": "ARTHRITIS SYMPTOMS DETECTED",
+            "actions": [
+                "1. IMAGING: X-ray or MRI to check for joint space narrowing or bone spurs (Image 90).",
+                "2. BLOOD TEST: Check for RA Factor, CRP, and ESR levels to detect systemic inflammation.",
+                "3. ACTIVITY: Low-impact exercises like swimming or cycling to maintain joint mobility.",
+                "4. THERAPY: Hot compress for stiffness and cold packs for acute swelling (Image 91).",
+                "5. WEIGHT MGMT: Reducing body weight to decrease pressure on weight-bearing joints (Image 89).",
+                "6. CONSULT: See a Rheumatologist or Orthopedic specialist for a long-term treatment plan."
+            ]
+        })
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Arthritis Analysis Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Swollen joints and long morning stiffness
+    test_symptoms = {"joint_pain_stiffness", "swelling_around_joints", "morning_stiffness_long_duration"}
+    test_data = {"age": 45, "pain_location": "knees_and_fingers"}
+    
+    report = arthritis_algorithm(test_symptoms, test_data)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Type: {0}".format(report['type']))
+    print("Status: {0}".format(report['status']))
+    print("\n[JOINT CARE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Gallstone Detection & Biliary Care
+import datetime
+
+def gallstone_algorithm(symptoms_input, lifestyle_input):
+    """
+    Logic for Gallstones based on Images 87, 88, and 89.
+    Focuses on pain localization, diet, and risk factors.
+    """
+    result = {
+        "condition": "Gallbladder Health",
+        "status": "Stable",
+        "severity": "Low",
+        "actions": []
+    }
+
+    # Core Symptoms from Image 87 & 88
+    gallstone_signs = {
+        "sudden_intensifying_pain_upper_right_abdomen",
+        "pain_between_shoulder_blades", "pain_in_right_shoulder",
+        "nausea_vomiting", "jaundice_signs"
+    }
+
+    # Risk Factors from Image 89
+    is_high_fat_diet = lifestyle_input.get("high_fat_diet", False)
+    is_overweight = lifestyle_input.get("overweight", False)
+
+    # Detection logic
+    detected_signs = symptoms_input.intersection(gallstone_signs)
+    
+    if detected_signs:
+        result["condition"] = "GALLSTONES SUSPECTED"
+        
+        if "jaundice_signs" in detected_signs or "nausea_vomiting" in detected_signs:
+            result["severity"] = "HIGH"
+            result["status"] = "POTENTIAL BILE DUCT BLOCKAGE"
+        else:
+            result["severity"] = "MODERATE"
+            result["status"] = "BILIARY COLIC"
+
+        result.update({
+            "actions": [
+                "1. IMAGING: Ultrasound of the abdomen to confirm the presence of stones (Image 87).",
+                "2. DIET: Switch to a low-fat, high-fiber diet to reduce gallbladder contractions.",
+                "3. HYDRATION: Maintain consistent water intake; avoid heavy, greasy meals.",
+                "4. MONITOR: Watch for signs of infection like fever or persistent yellowing of skin.",
+                "5. CONSULT: See a Gastroenterologist; surgery (Cholecystectomy) may be needed if symptomatic.",
+                "6. WEIGHT MGMT: Gradual weight loss is recommended; avoid rapid fasting (Image 89)."
+            ]
+        })
+
+        if is_high_fat_diet:
+            result["actions"].insert(0, "ADVICE: High-fat diet detected as a trigger. Immediate dietary modification required.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Gallstone Analysis Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Sharp upper right pain radiating to shoulder
+    test_symptoms = {"sudden_intensifying_pain_upper_right_abdomen", "pain_in_right_shoulder"}
+    test_lifestyle = {"high_fat_diet": True, "overweight": True}
+    
+    report = gallstone_algorithm(test_symptoms, test_lifestyle)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Severity: {0}".format(report['severity']))
+    print("Status: {0}".format(report['status']))
+    print("\n[GALLBLADDER CARE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Migraine Analysis & Relief
+import datetime
+
+def migraine_algorithm(symptoms_input, triggers_input):
+    """
+    Logic for Migraine based on Images 78, 79, and 80.
+    Focuses on localized headache, aura, and sensory triggers.
+    """
+    result = {
+        "condition": "Neurological Health",
+        "status": "Observation",
+        "has_aura": False,
+        "actions": []
+    }
+
+    # Core Symptoms from Image 78 & 79
+    migraine_signs = {
+        "throbbing_one_sided_pain", "sensitivity_to_light", "sensitivity_to_sound",
+        "nausea_vomiting", "visual_disturbances_aura", "dizziness"
+    }
+
+    # Common Triggers from Image 80
+    common_triggers = {
+        "stress", "lack_of_sleep", "strong_smells", "bright_lights", "caffeine_withdrawal"
+    }
+
+    # Detection logic
+    detected_signs = symptoms_input.intersection(migraine_signs)
+    detected_triggers = triggers_input.intersection(common_triggers)
+    
+    if detected_signs:
+        if "visual_disturbances_aura" in detected_signs:
+            result["has_aura"] = True
+            result["status"] = "MIGRAINE WITH AURA"
+        else:
+            result["status"] = "MIGRAINE WITHOUT AURA"
+
+        result.update({
+            "condition": "MIGRAINE SUSPECTED",
+            "actions": [
+                "1. DARK ROOM: Rest in a quiet, dark room to reduce sensory overload (Image 78).",
+                "2. HYDRATION: Drink plenty of water and avoid skipping meals.",
+                "3. COMPRESS: Apply a cool cloth or ice pack to the forehead or back of the neck.",
+                "4. DIARY: Maintain a headache diary to identify and avoid personal triggers (Image 80).",
+                "5. MEDICATION: Pain relievers or triptans as prescribed by a neurologist.",
+                "6. RELAXATION: Practice deep breathing or meditation to manage stress-induced attacks."
+            ]
+        })
+
+        if detected_triggers:
+            result["actions"].insert(0, "ADVICE: Potential triggers detected. Avoid exposure to strong lights/smells during onset.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Migraine Analysis Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: One-sided throbbing pain with light sensitivity
+    test_symptoms = {"throbbing_one_sided_pain", "sensitivity_to_light", "nausea_vomiting"}
+    test_triggers = {"stress", "bright_lights"}
+    
+    report = migraine_algorithm(test_symptoms, test_triggers)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Status: {0}".format(report['status']))
+    print("\n[MIGRAINE CARE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: UTI Detection & Urinary Health
+import datetime
+
+def uti_algorithm(symptoms_input, vitals_input):
+    """
+    Logic for Urinary Tract Infection (UTI) based on Images 78-80.
+    Focuses on infection markers and hydration levels.
+    """
+    result = {
+        "condition": "Urinary Health",
+        "status": "Stable",
+        "risk_level": "Low",
+        "actions": []
+    }
+
+    # Core Symptoms from Image 78 & 79
+    uti_signs = {
+        "burning_sensation_urination", "frequent_strong_urge_to_urinate",
+        "cloudy_strong_smelling_urine", "pelvic_pain_in_women",
+        "passing_small_amounts_of_urine", "blood_in_urine"
+    }
+
+    # Emergency markers
+    has_high_fever = vitals_input.get("temperature", 98.6) > 101.0
+    back_pain = "upper_back_side_pain" in symptoms_input
+
+    # Detection logic
+    detected_signs = symptoms_input.intersection(uti_signs)
+    
+    if detected_signs:
+        result["condition"] = "UTI SYMPTOMS DETECTED"
+        
+        # Checking for kidney involvement (Pyelonephritis) - Image 80
+        if has_high_fever and back_pain:
+            result["risk_level"] = "CRITICAL"
+            result["status"] = "KIDNEY INFECTION SUSPECTED"
+        else:
+            result["risk_level"] = "MODERATE"
+            result["status"] = "LOCALIZED INFECTION"
+
+        result.update({
+            "actions": [
+                "1. HYDRATION: Drink plenty of water to flush out bacteria from the urinary tract.",
+                "2. URINALYSIS: Get a urine culture test to identify the specific bacteria.",
+                "3. ANTIBIOTICS: Complete the full course of prescribed antibiotics even if feeling better.",
+                "4. CRANBERRY: Unsweetened cranberry juice may help prevent bacteria from sticking to the tract.",
+                "5. HYGIENE: Maintain proper personal hygiene to prevent recurrent infections.",
+                "6. AVOID IRRITANTS: Limit caffeine and spicy foods until the infection clears."
+            ]
+        })
+
+        if result["risk_level"] == "CRITICAL":
+            result["actions"].insert(0, "URGENT: Infection may have reached the kidneys. Seek immediate medical attention.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: UTI Analysis Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Burning sensation and frequent urge
+    test_symptoms = {"burning_sensation_urination", "frequent_strong_urge_to_urinate"}
+    test_vitals = {"temperature": 99.0}
+    
+    report = uti_algorithm(test_symptoms, test_vitals)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Status: {0}".format(report['status']))
+    print("\n[URINARY CARE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Eye Infection & Vision Care
+import datetime
+
+def eye_infection_algorithm(symptoms_input):
+    """
+    Logic for Eye Infections based on Images 81, 82, and 83.
+    Focuses on conjunctivitis (pink eye) and bacterial/viral markers.
+    """
+    result = {
+        "condition": "Ophthalmological Health",
+        "status": "Observation",
+        "is_contagious": False,
+        "actions": []
+    }
+
+    # Symptoms list from Image 81 & 82
+    eye_triggers = {
+        "redness_in_whites_of_eye", "itching_burning_eyes", "increased_tearing",
+        "thick_yellow_discharge_crusts", "blurred_vision", "sensitivity_to_light"
+    }
+
+    # Detection logic
+    detected_signs = symptoms_input.intersection(eye_triggers)
+    
+    if detected_signs:
+        result["condition"] = "CONJUNCTIVITIS (PINK EYE) SUSPECTED"
+        result["is_contagious"] = True
+        
+        if "thick_yellow_discharge_crusts" in detected_signs:
+            result["status"] = "LIKELY BACTERIAL INFECTION"
+        else:
+            result["status"] = "LIKELY VIRAL OR ALLERGIC"
+
+        result.update({
+            "actions": [
+                "1. HYGIENE: Do not touch or rub your eyes. Wash hands frequently (Image 81).",
+                "2. COMPRESS: Use a clean, warm or cold compress to soothe irritation.",
+                "3. CONTACT LENSES: Stop wearing contact lenses until the infection is gone.",
+                "4. DISINFECT: Change pillowcases and towels daily to prevent spreading to others.",
+                "5. MEDICATION: Antibiotic or lubricating eye drops as prescribed (Image 83).",
+                "6. URGENT: If you experience severe eye pain or sudden vision loss, see an eye specialist."
+            ]
+        })
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Eye Infection Analysis Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Redness and yellow discharge
+    test_symptoms = {"redness_in_whites_of_eye", "thick_yellow_discharge_crusts", "itching_burning_eyes"}
+    
+    report = eye_infection_algorithm(test_symptoms)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Status: {0}".format(report['status']))
+    print("Contagious: {0}".format(report['is_contagious']))
+    print("\n[EYE CARE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Kidney Failure (Chronic Kidney Disease) Monitoring
+import datetime
+
+def kidney_failure_algorithm(vitals_input, symptoms_input):
+    """
+    Logic for Kidney Failure based on Images 78, 81, 82, and 83.
+    Focuses on GFR levels, fluid retention, and waste buildup.
+    """
+    result = {
+        "condition": "Renal Health (Chronic)",
+        "stage": "Healthy",
+        "status": "Stable",
+        "actions": []
+    }
+
+    # Extracting GFR (Glomerular Filtration Rate) and Creatinine
+    gfr_value = vitals_input.get("gfr", 100)
+    creatinine = vitals_input.get("creatinine", 1.0)
+
+    # Symptoms list from Image 81 & 82
+    renal_failure_signs = {
+        "swelling_feet_ankles", "shortness_of_breath", "nausea_vomiting",
+        "decreased_urine_output", "fatigue_weakness", "persistent_itching",
+        "fluid_retention", "chest_pain"
+    }
+
+    # Classification logic based on GFR (Image 83)
+    if gfr_value < 15:
+        result["stage"] = "STAGE 5 (Kidney Failure)"
+        result["status"] = "CRITICAL - DIALYSIS REQUIRED"
+    elif gfr_value < 30:
+        result["stage"] = "STAGE 4 (Severe Damage)"
+        result["status"] = "VERY HIGH RISK"
+    elif gfr_value < 60:
+        result["stage"] = "STAGE 3 (Moderate Damage)"
+        result["status"] = "MEDICAL MANAGEMENT REQUIRED"
+    
+    # Detection logic
+    detected_signs = symptoms_input.intersection(renal_failure_signs)
+    
+    if result["stage"] != "Healthy" or detected_signs:
+        result.update({
+            "condition": "KIDNEY FUNCTION IMPAIRMENT",
+            "actions": [
+                "1. BLOOD TEST: Monitor Serum Creatinine and BUN levels regularly (Image 78).",
+                "2. FLUID CONTROL: Limit fluid intake as per doctor's advice to prevent swelling.",
+                "3. DIET: Low protein, low potassium, and low phosphorus diet (Image 82).",
+                "4. BP CONTROL: Maintain blood pressure below 130/80 to reduce kidney strain.",
+                "5. DIALYSIS/TRANSPLANT: Consult a Nephrologist for renal replacement therapy if in Stage 5.",
+                "6. MEDICATION REVIEW: Avoid NSAIDs (painkillers) which can further damage kidneys."
+            ]
+        })
+
+        if "swelling_feet_ankles" in detected_signs:
+            result["actions"].insert(0, "URGENT: Significant fluid retention detected. Monitor SpO2 and lung sounds.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Kidney Failure Analysis Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Low GFR and swelling (Image 81)
+    test_vitals = {"gfr": 25, "creatinine": 4.5}
+    test_symptoms = {"swelling_feet_ankles", "fatigue_weakness"}
+    
+    report = kidney_failure_algorithm(test_vitals, test_symptoms)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Current Stage: {0}".format(report['stage']))
+    print("Status: {0}".format(report['status']))
+    print("\n[KIDNEY CARE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Eczema (Atopic Dermatitis) Monitoring
+import datetime
+
+def eczema_algorithm(symptoms_input):
+    """
+    Logic for Eczema based on Images 64 and 65.
+    Focuses on skin barrier dysfunction, itching, and inflammation.
+    """
+    result = {
+        "condition": "Dermatological Health",
+        "status": "Observation",
+        "actions": []
+    }
+
+    # Core Symptoms from Image 64 & 65
+    eczema_triggers = {
+        "dry_sensitive_skin", "intense_itching", "red_to_brownish_patches",
+        "small_raised_bumps_leaking_fluid", "thickened_cracked_scaly_skin",
+        "raw_sensitive_skin_from_scratching"
+    }
+
+    # Detection logic
+    detected_signs = symptoms_input.intersection(eczema_triggers)
+    
+    if detected_signs:
+        result.update({
+            "condition": "ECZEMA SUSPECTED",
+            "actions": [
+                "1. MOISTURIZE: Apply thick creams or ointments twice a day to lock in moisture.",
+                "2. ITCH CONTROL: Use anti-itch creams or cold compresses to reduce the urge to scratch.",
+                "3. GENTLE CARE: Use mild, fragrance-free soaps and avoid long, hot showers.",
+                "4. TRIGGER IDENTIFICATION: Avoid harsh detergents, wool, or allergens that cause flare-ups.",
+                "5. COTTON FABRICS: Wear soft, breathable cotton clothes to reduce skin irritation.",
+                "6. CONSULT: If skin is leaking yellow fluid or has honey-colored crusts, check for infection."
+            ]
+        })
+
+        if "intense_itching" in detected_signs:
+            result["status"] = "FLARE-UP ACTIVE"
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Eczema Analysis Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Dry skin with intense itching and red patches
+    test_symptoms = {"dry_sensitive_skin", "intense_itching", "red_to_brownish_patches"}
+    
+    report = eczema_algorithm(test_symptoms)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Status: {0}".format(report['status']))
+    print("\n[ECZEMA CARE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Spondylitis & Back Pain Management
+import datetime
+
+def spondylitis_algorithm(symptoms_input, lifestyle_input):
+    """
+    Logic for Spondylitis based on Images 66, 67, 68, and 69.
+    Focuses on spinal inflammation, posture, and pain relief.
+    """
+    result = {
+        "condition": "Musculoskeletal Health",
+        "status": "Stable",
+        "actions": []
+    }
+
+    # Symptoms list from Image 66 & 67
+    spondylitis_triggers = {
+        "lower_back_pain", "morning_stiffness", "neck_pain",
+        "reduced_flexibility", "pain_in_buttocks", "fatigue"
+    }
+
+    # Lifestyle factors from Image 68
+    is_sedentary = lifestyle_input.get("long_sitting_hours", False)
+    poor_posture = lifestyle_input.get("poor_posture", False)
+
+    # Detection logic
+    detected_signs = symptoms_input.intersection(spondylitis_triggers)
+    
+    if detected_signs:
+        status_level = "OBSERVATION"
+        if "morning_stiffness" in detected_signs or "reduced_flexibility" in detected_signs:
+            status_level = "CHRONIC INFLAMMATION SUSPECTED"
+
+        result.update({
+            "condition": "SPONDYLITIS SYMPTOMS DETECTED",
+            "status": status_level,
+            "actions": [
+                "1. EXERCISE: Perform gentle stretching and strengthening exercises for the spine (Image 69).",
+                "2. POSTURE: Maintain a straight posture while sitting and working on computers.",
+                "3. HEAT/COLD THERAPY: Use heating pads to reduce stiffness or ice packs for inflammation.",
+                "4. SLEEP: Use a firm mattress and avoid very thick pillows to support spinal alignment.",
+                "5. WEIGHT MGMT: Maintain a healthy weight to reduce pressure on the lower back.",
+                "6. CONSULT: If pain radiates down the legs (Sciatica) or causes numbness, see an Orthopedic."
+            ]
+        })
+
+        if is_sedentary or poor_posture:
+            result["actions"].insert(0, "ADVICE: Take frequent breaks from sitting and adjust your ergonomic setup.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Spondylitis Analysis Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Morning stiffness and lower back pain with long sitting hours
+    test_symptoms = {"lower_back_pain", "morning_stiffness"}
+    test_lifestyle = {"long_sitting_hours": True, "poor_posture": True}
+    
+    report = spondylitis_algorithm(test_symptoms, test_lifestyle)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Status: {0}".format(report['status']))
+    print("\n[SPINAL CARE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Osteoporosis (Bone Density) Monitoring
+import datetime
+
+def osteoporosis_algorithm(symptoms_input, vitals_input):
+    """
+    Logic for Osteoporosis based on Images 70 and 71.
+    Focuses on bone mineral density and fracture risk.
+    """
+    result = {
+        "condition": "Bone Health",
+        "status": "Stable",
+        "t_score": vitals_input.get("t_score", 0.0),
+        "actions": []
+    }
+
+    # Symptoms and signs from Image 70
+    bone_triggers = {
+        "back_pain_fractured_vertebra", "loss_of_height", 
+        "stooped_posture", "easy_bone_fractures"
+    }
+
+    # T-score logic (Medical standard for DEXA scan)
+    t_score = result["t_score"]
+    
+    # Classification logic (Image 71)
+    if t_score <= -2.5:
+        result["status"] = "OSTEOPOROSIS DETECTED"
+    elif -2.5 < t_score <= -1.0:
+        result["status"] = "OSTEOPENIA (LOW BONE MASS)"
+    else:
+        result["status"] = "NORMAL BONE DENSITY"
+
+    # Detection logic based on symptoms
+    detected_signs = symptoms_input.intersection(bone_triggers)
+    
+    if result["status"] != "NORMAL BONE DENSITY" or detected_signs:
+        result.update({
+            "actions": [
+                "1. DIAGNOSIS: DEXA Scan to measure Bone Mineral Density (BMD).",
+                "2. NUTRITION: Increase Calcium-rich foods (milk, yogurt, greens) and Vitamin D (Image 71).",
+                "3. EXERCISE: Weight-bearing exercises like walking and muscle strengthening.",
+                "4. SAFETY: Prevent falls by keeping floors clear and using bright lighting.",
+                "5. SUPPLEMENTS: Take Calcium and Vitamin D3 supplements as prescribed.",
+                "6. MONITORING: Periodic bone density checks for elderly patients."
+            ]
+        })
+
+        if "loss_of_height" in detected_signs or "stooped_posture" in detected_signs:
+            result["actions"].insert(0, "WARNING: Signs of spinal compression or vertebral weakening detected.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Osteoporosis Analysis Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Low T-score with stooped posture
+    test_vitals = {"t_score": -2.8}
+    test_symptoms = {"stooped_posture", "back_pain_fractured_vertebra"}
+    
+    report = osteoporosis_algorithm(test_symptoms, test_vitals)
+
+    print("Bone Status: {0}".format(report['status']))
+    print("T-Score: {0}".format(report['t_score']))
+    print("\n[BONE CARE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Thyroid Function Monitoring
+import datetime
+
+def thyroid_algorithm(vitals_input, symptoms_input):
+    """
+    Logic for Thyroid disorders based on Images 72, 73, and 74.
+    Focuses on TSH levels and metabolic symptoms.
+    """
+    result = {
+        "condition": "Endocrine Health",
+        "type": "Normal",
+        "status": "Stable",
+        "actions": []
+    }
+
+    # Extracting TSH level (mIU/L)
+    tsh_level = vitals_input.get("tsh", 2.5)
+
+    # Symptoms list from Image 73 & 74
+    hypo_symptoms = {"weight_gain", "fatigue", "cold_intolerance", "dry_skin", "constipation"}
+    hyper_symptoms = {"weight_loss", "rapid_heartbeat", "heat_intolerance", "anxiety", "insomnia"}
+
+    detected_hypo = symptoms_input.intersection(hypo_symptoms)
+    detected_hyper = symptoms_input.intersection(hyper_symptoms)
+
+    # Classification logic (Image 72)
+    if tsh_level > 4.5:
+        result["type"] = "HYPOTHYROIDISM"
+        result["status"] = "UNDERACTIVE THYROID"
+        result["actions"] = [
+            "1. DIAGNOSIS: Check T3 and T4 levels to confirm thyroid function.",
+            "2. MEDICATION: Levothyroxine supplements as prescribed by an endocrinologist.",
+            "3. DIET: Ensure adequate iodine intake and avoid excessive cruciferous vegetables (raw).",
+            "4. MONITORING: Re-test TSH every 6-8 weeks after starting medication."
+        ]
+    elif tsh_level < 0.4:
+        result["type"] = "HYPERTHYROIDISM"
+        result["status"] = "OVERACTIVE THYROID"
+        result["actions"] = [
+            "1. DIAGNOSIS: Thyroid ultrasound or radioactive iodine uptake test.",
+            "2. TREATMENT: Anti-thyroid medications, radioactive iodine, or beta-blockers.",
+            "3. MONITORING: Regular heart rate tracking as hyperthyroidism can cause palpitations.",
+            "4. CONSULT: See an endocrinologist immediately to prevent 'Thyroid Storm'."
+        ]
+
+    if result["type"] != "Normal":
+        if detected_hypo or detected_hyper:
+            result["actions"].append("NOTE: Clinical symptoms match hormonal imbalance levels.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Thyroid Analysis Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: High TSH with weight gain and fatigue
+    test_vitals = {"tsh": 8.2}
+    test_symptoms = {"weight_gain", "fatigue", "dry_skin"}
+    
+    report = thyroid_algorithm(test_vitals, test_symptoms)
+
+    print("Thyroid Type: {0}".format(report['type']))
+    print("Status: {0}".format(report['status']))
+    print("\n[THYROID MANAGEMENT PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Kidney Stone Detection & Hydration Care
+import datetime
+
+def kidney_stone_algorithm(symptoms_input, vitals_input):
+    """
+    Logic for Kidney Stones based on Images 75, 76, and 77.
+    Focuses on pain location, hydration, and mineral buildup.
+    """
+    result = {
+        "condition": "Renal Health",
+        "status": "Stable",
+        "severity": "Low",
+        "actions": []
+    }
+
+    # Symptoms list from Image 75 & 76
+    stone_triggers = {
+        "sharp_side_back_pain", "pain_radiating_to_groin", "pain_on_urination",
+        "pink_red_brown_urine", "nausea_vomiting", "frequent_urination"
+    }
+
+    # Extracting water intake and temperature
+    daily_water_liters = vitals_input.get("water_intake", 1.5)
+    has_fever = vitals_input.get("temperature", 98.6) > 100.5
+
+    # Detection logic
+    detected_symptoms = symptoms_input.intersection(stone_triggers)
+    
+    if detected_symptoms:
+        result["condition"] = "KIDNEY STONE SUSPECTED"
+        
+        if "pink_red_brown_urine" in detected_symptoms or has_fever:
+            result["severity"] = "HIGH"
+            result["status"] = "URGENT MEDICAL REVIEW"
+        else:
+            result["severity"] = "MODERATE"
+            result["status"] = "MONITORING & HYDRATION"
+
+        result.update({
+            "actions": [
+                "1. HYDRATION: Drink at least 3-4 liters of water daily to help flush out the stone (Image 77).",
+                "2. DIAGNOSIS: Ultrasound (KUB) or CT scan to determine stone size and location.",
+                "3. URINALYSIS: Check for blood or minerals in the urine (Image 75).",
+                "4. DIET: Reduce salt and oxalates (spinach, nuts) if stones are calcium-based.",
+                "5. PAIN MANAGEMENT: Use prescribed analgesics for intense renal colic.",
+                "6. CITRUS: Lemon water may help prevent certain types of stone formation."
+            ]
+        })
+
+        if daily_water_liters < 2.0:
+            result["actions"].insert(0, "CRITICAL: Low water intake detected. Increase fluids immediately to prevent stone growth.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Kidney Stone Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Sharp back pain and low water intake
+    test_symptoms = {"sharp_side_back_pain", "nausea_vomiting"}
+    test_vitals = {"water_intake": 1.2, "temperature": 98.6}
+    
+    report = kidney_stone_algorithm(test_symptoms, test_vitals)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Severity: {0}".format(report['severity']))
+    print("Status: {0}".format(report['status']))
+    print("\n[RENAL CARE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Bronchitis Detection & Monitoring
+import datetime
+
+def bronchitis_algorithm(symptoms_input, history_input):
+    """
+    Logic for Bronchitis based on Images 50, 51, 52, and 53.
+    Differentiates between Acute and Chronic Bronchitis.
+    """
+    result = {
+        "condition": "Respiratory Health Monitoring",
+        "type": "Undetermined",
+        "status": "Stable",
+        "actions": []
+    }
+
+    # Symptoms list from Image 50 & 51
+    bronchitis_triggers = {
+        "persistent_cough", "production_of_mucus", "fatigue",
+        "shortness_of_breath", "slight_fever_chills", "chest_discomfort"
+    }
+
+    # Patient history for type classification (Image 52)
+    has_long_term_cough = history_input.get("cough_duration_months", 0) >= 3
+    is_smoker = history_input.get("smoking_history", False)
+
+    # Detection logic
+    if symptoms_input.intersection(bronchitis_triggers):
+        # Classification (Image 52)
+        if has_long_term_cough:
+            result["type"] = "CHRONIC BRONCHITIS"
+            result["status"] = "CHRONIC CONDITION - REQUIRES MANAGEMENT"
+        else:
+            result["type"] = "ACUTE BRONCHITIS"
+            result["status"] = "TEMPORARY INFLAMMATION"
+
+        result.update({
+            "condition": "BRONCHITIS DETECTED",
+            "actions": [
+                "1. HYDRATION: Drink plenty of warm fluids to thin the mucus.",
+                "2. HUMIDITY: Use a humidifier or take steam to soothe airways (Image 53).",
+                "3. REST: Avoid physical strain and get adequate sleep.",
+                "4. AVOID IRRITANTS: Strictly stay away from smoke, dust, and pollution.",
+                "5. MEDICATION: Cough suppressants or expectorants as advised by a doctor.",
+                "6. WARNING: If fever persists or breathlessness increases, check for Pneumonia."
+            ]
+        })
+
+        if is_smoker and result["type"] == "CHRONIC BRONCHITIS":
+            result["actions"].insert(0, "CRITICAL: Smoking cessation is mandatory to prevent permanent lung damage (COPD).")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Bronchitis Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Long term smoker with persistent cough
+    test_symptoms = {"persistent_cough", "production_of_mucus", "shortness_of_breath"}
+    test_history = {"cough_duration_months": 4, "smoking_history": True}
+    
+    report = bronchitis_algorithm(test_symptoms, test_history)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Type: {0}".format(report['type']))
+    print("Status: {0}".format(report['status']))
+    print("\n[RESPIRATORY CARE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Anemia Detection & Nutritional Guidance
+import datetime
+
+def anemia_algorithm(vitals_input, symptoms_input):
+    """
+    Logic for Anemia based on Images 54, 55, and 56.
+    Focuses on Hemoglobin (Hb) levels and iron deficiency.
+    """
+    result = {
+        "condition": "Hematological Health",
+        "status": "Stable",
+        "severity": "Normal",
+        "actions": []
+    }
+
+    # Extracting Hemoglobin (Hb) level (g/dL)
+    hb_level = vitals_input.get("hemoglobin", 14.0)
+    gender = vitals_input.get("gender", "male") # male/female
+
+    # Symptoms list from Image 54 & 55
+    anemia_triggers = {
+        "extreme_fatigue", "pale_skin", "shortness_of_breath",
+        "dizziness_lightheadedness", "cold_hands_feet", "brittle_nails",
+        "chest_pain", "fast_heartbeat"
+    }
+
+    # Threshold logic (General standards)
+    is_anemic = False
+    if gender == "male" and hb_level < 13.5:
+        is_anemic = True
+    elif gender == "female" and hb_level < 12.0:
+        is_anemic = True
+
+    # Detection logic
+    detected_symptoms = symptoms_input.intersection(anemia_triggers)
+    
+    if is_anemic or detected_symptoms:
+        if hb_level < 7.0:
+            result["severity"] = "SEVERE"
+            result["status"] = "CRITICAL - IMMEDIATE ATTENTION"
+        elif hb_level < 10.0:
+            result["severity"] = "MODERATE"
+            result["status"] = "MEDICAL EVALUATION REQUIRED"
+        else:
+            result["severity"] = "MILD"
+            result["status"] = "MONITORING & DIET CHANGE"
+
+        result.update({
+            "condition": "ANEMIA DETECTED",
+            "actions": [
+                "1. BLOOD TEST: Perform a Complete Blood Count (CBC) and Serum Ferritin test.",
+                "2. DIET: Increase iron-rich foods like spinach, jaggery, beetroot, and green leafy vegetables (Image 56).",
+                "3. VITAMIN C: Consume Vitamin C (lemon, orange) to help iron absorption.",
+                "4. SUPPLEMENTS: Take Iron and Folic Acid supplements as prescribed by a doctor.",
+                "5. MONITORING: Re-check Hb levels after 1 month of treatment.",
+                "6. CAUTION: Avoid tea or coffee immediately after meals as they hinder iron absorption."
+            ]
+        })
+
+        if result["severity"] == "SEVERE":
+            result["actions"].insert(0, "URGENT: Very low Hb detected. Blood transfusion may be necessary. Consult a Hematologist.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Anemia Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Low Hb in a female patient with fatigue
+    test_vitals = {"hemoglobin": 9.5, "gender": "female"}
+    test_symptoms = {"extreme_fatigue", "pale_skin", "dizziness_lightheadedness"}
+    
+    report = anemia_algorithm(test_vitals, test_symptoms)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Severity: {0}".format(report['severity']))
+    print("Status: {0}".format(report['status']))
+    print("\n[ANEMIA MANAGEMENT PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Diabetes Monitoring & Glucose Tracking
+import datetime
+
+def diabetes_algorithm(vitals_input, symptoms_input):
+    """
+    Logic for Diabetes based on Images 57, 58, and 59.
+    Focuses on Blood Glucose levels (Fasting/Post-Prandial).
+    """
+    result = {
+        "condition": "Endocrine Health",
+        "status": "Normal",
+        "category": "Healthy",
+        "actions": []
+    }
+
+    # Extracting Glucose levels (mg/dL)
+    # Fasting (रिकाम्या पोटी) or Post-Prandial (जेवणानंतर)
+    glucose_value = vitals_input.get("blood_sugar", 90)
+    test_type = vitals_input.get("test_type", "fasting") 
+
+    # Symptoms list from Image 57 & 58
+    diabetes_triggers = {
+        "excessive_thirst", "frequent_urination", "unexplained_weight_loss",
+        "extreme_hunger", "blurred_vision", "slow_healing_sores",
+        "fatigue", "tingling_in_hands_feet"
+    }
+
+    # Classification logic (Image 57)
+    is_high = False
+    if test_type == "fasting":
+        if glucose_value >= 126:
+            result["category"] = "DIABETIC"
+            is_high = True
+        elif glucose_value >= 100:
+            result["category"] = "PRE-DIABETIC"
+    else: # Post-Prandial / Random
+        if glucose_value >= 200:
+            result["category"] = "DIABETIC"
+            is_high = True
+        elif glucose_value >= 140:
+            result["category"] = "PRE-DIABETIC"
+
+    # Detection logic
+    detected_symptoms = symptoms_input.intersection(diabetes_triggers)
+    
+    if is_high or detected_symptoms:
+        result["status"] = "ALERT" if is_high else "OBSERVATION"
+        
+        result.update({
+            "condition": "DIABETES MONITORING",
+            "actions": [
+                "1. TEST: Perform HbA1c test for 3-month average glucose levels.",
+                "2. DIET: Limit sugar, refined carbs (white rice, bread), and sugary drinks.",
+                "3. ACTIVITY: Regular physical exercise (30 mins walk) to improve insulin sensitivity.",
+                "4. FOOT CARE: Inspect feet daily for cuts or blisters (Image 58).",
+                "5. MEDICATION: Consult a doctor for Metformin or Insulin therapy if needed.",
+                "6. MONITORING: Maintain a daily log of blood sugar readings."
+            ]
+        })
+
+        if glucose_value > 300:
+            result["status"] = "CRITICAL"
+            result["actions"].insert(0, "URGENT: Very high blood sugar! Risk of Ketoacidosis (DKA). Seek medical help.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Diabetes Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: High fasting sugar with thirst and fatigue
+    test_vitals = {"blood_sugar": 145, "test_type": "fasting"}
+    test_symptoms = {"excessive_thirst", "fatigue", "frequent_urination"}
+    
+    report = diabetes_algorithm(test_vitals, test_symptoms)
+
+    print("Category: {0}".format(report['category']))
+    print("Status: {0}".format(report['status']))
+    print("\n[DIABETES CARE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Acne (Pimples) Analysis & Skin Care
+import datetime
+
+def acne_analysis_algorithm(symptoms_input, skin_type_input):
+    """
+    Logic for Acne based on Images 59, 60, and 61.
+    Focuses on pimple types, causes (sebum/bacteria), and care.
+    """
+    result = {
+        "condition": "Dermatological Health",
+        "acne_type": "None",
+        "status": "Healthy",
+        "actions": []
+    }
+
+    # Acne types and symptoms from Image 60 & 61
+    acne_variants = {
+        "whiteheads": "Clogged pores staying under skin",
+        "blackheads": "Open clogged pores (oxidized)",
+        "papules": "Small red, tender bumps",
+        "pustules": "Pimples with pus at tips",
+        "cystic_acne": "Deep, painful, pus-filled lumps"
+    }
+
+    # Common triggers from Image 59
+    triggers = symptoms_input.intersection({"oily_skin", "hormonal_changes", "clogged_pores", "bacterial_growth"})
+
+    # Detection logic
+    detected_acne = symptoms_input.intersection(acne_variants.keys())
+
+    if detected_acne:
+        primary_type = list(detected_acne)[0]
+        result["acne_type"] = primary_type
+        
+        if primary_type == "cystic_acne" or "pustules" in detected_acne:
+            result["status"] = "INFLAMMATORY - REQUIRES CARE"
+        else:
+            result["status"] = "MILD - SKINCARE ROUTINE NEEDED"
+
+        result.update({
+            "condition": "ACNE DETECTED",
+            "actions": [
+                "1. CLEANSING: Wash face twice daily with a mild cleanser (Image 59).",
+                "2. NON-COMEDOGENIC: Use products that don't clog pores.",
+                "3. DO NOT POP: Strictly avoid squeezing pimples to prevent scarring and infection.",
+                "4. INGREDIENTS: Look for Salicylic acid or Benzoyl peroxide based on advice.",
+                "5. HYDRATION: Drink water and avoid excessive oily/sugary foods.",
+                "6. CONSULT: If acne is cystic or leaves scars, see a Dermatologist."
+            ]
+        })
+
+        if skin_type_input == "oily":
+            result["actions"].insert(0, "TIP: Excessive sebum production detected. Use oil-free moisturizer.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Acne Analysis Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Oily skin with pustules
+    test_symptoms = {"pustules", "oily_skin", "clogged_pores"}
+    test_skin = "oily"
+    
+    report = acne_analysis_algorithm(test_symptoms, test_skin)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Acne Type: {0}".format(report['acne_type']))
+    print("Status: {0}".format(report['status']))
+    print("\n[SKIN CARE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Psoriasis Analysis & Management
+import datetime
+
+def psoriasis_algorithm(symptoms_input):
+    """
+    Logic for Psoriasis based on Images 62 and 63.
+    Focuses on plaque detection, itching, and autoimmune triggers.
+    """
+    result = {
+        "condition": "Dermatological Health (Autoimmune)",
+        "status": "Chronic Observation",
+        "actions": []
+    }
+
+    # Core Symptoms from Image 62 & 63
+    psoriasis_triggers = {
+        "red_patches_silvery_scales", "dry_cracked_skin", "itching_burning",
+        "swollen_stiff_joints", "thickened_pitted_nails"
+    }
+
+    # Detection logic
+    detected_signs = symptoms_input.intersection(psoriasis_triggers)
+    
+    if detected_signs:
+        result.update({
+            "condition": "PSORIASIS SUSPECTED",
+            "actions": [
+                "1. TOPICALS: Apply prescribed moisturizing creams or ointments to reduce scaling.",
+                "2. TRIGGER AVOIDANCE: Identify and avoid triggers like stress, skin injuries, or infections.",
+                "3. PHOTOTHERAPY: Consider controlled UV light therapy under medical supervision.",
+                "4. HYDRATION: Keep the skin well-hydrated to prevent cracking and bleeding.",
+                "5. CONSULT: See a Dermatologist for a skin biopsy or specialized systemic treatment.",
+                "6. JOINT CHECK: If joint pain is present, check for Psoriatic Arthritis."
+            ]
+        })
+
+        if "red_patches_silvery_scales" in detected_signs:
+            result["status"] = "ACTIVE PLAQUE FORMATION"
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Psoriasis Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Red patches with silvery scales and itching
+    test_symptoms = {"red_patches_silvery_scales", "itching_burning"}
+    
+    report = psoriasis_algorithm(test_symptoms)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Status: {0}".format(report['status']))
+    print("\n[PSORIASIS MANAGEMENT PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Heart Attack (Myocardial Infarction) Detection
+import datetime
+
+def heart_attack_algorithm(symptoms_input, vitals_input):
+    """
+    Critical logic for Heart Attack detection.
+    Focuses on chest pain, radiating pain, and heart rate.
+    """
+    result = {
+        "condition": "Cardiovascular Monitoring",
+        "status": "Stable",
+        "actions": []
+    }
+
+    # Core Symptoms of Heart Attack
+    cardiac_triggers = {
+        "chest_pain_pressure", "pain_radiating_to_left_arm", "pain_in_jaw_back",
+        "excessive_sweating", "shortness_of_breath", "nausea_dizziness",
+        "heart_palpitations", "extreme_anxiety"
+    }
+
+    # Extracting Heart Rate and BP
+    heart_rate = vitals_input.get("heart_rate", 72)
+    systolic_bp = vitals_input.get("systolic_bp", 120)
+
+    # Detection logic
+    is_high_risk = "chest_pain_pressure" in symptoms_input and "excessive_sweating" in symptoms_input
+    
+    if symptoms_input.intersection(cardiac_triggers) or heart_rate > 100 or heart_rate < 50:
+        status_level = "EMERGENCY"
+        
+        result.update({
+            "condition": "HEART ATTACK SUSPECTED",
+            "status": status_level,
+            "actions": [
+                "1. IMMEDIATE ACTION: Call for an ambulance or emergency medical team.",
+                "2. POSITION: Keep the patient sitting down and calm to reduce heart strain.",
+                "3. ASPIRIN: If recommended by a doctor, give one 325mg Aspirin to chew (if not allergic).",
+                "4. DIAGNOSIS: Perform an immediate ECG (Electrocardiogram) to check heart rhythm.",
+                "5. LABS: Check Cardiac Troponin levels in the blood.",
+                "6. CPR/AED: If the patient becomes unconscious and has no pulse, start CPR immediately."
+            ]
+        })
+
+        if is_high_risk:
+            result["actions"].insert(0, "CRITICAL: Severe chest pressure and cold sweat detected. Time is Muscle - Get to a hospital NOW.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Heart Attack Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Chest pain radiating to arm with high heart rate
+    test_symptoms = {"chest_pain_pressure", "pain_radiating_to_left_arm", "excessive_sweating"}
+    test_vitals = {"heart_rate": 110, "systolic_bp": 150}
+    
+    report = heart_attack_algorithm(test_symptoms, test_vitals)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Status: {0}".format(report['status']))
+    print("\n[EMERGENCY CARDIAC PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Malaria Detection & Monitoring
+import datetime
+
+def malaria_algorithm(symptoms_input):
+    """
+    Logic for Malaria (हिवताप) based on Images 41, 42, and 43.
+    Focuses on cyclical fever, chills, and red blood cell impact.
+    """
+    result = {
+        "condition": "Infectious Disease Monitoring",
+        "status": "Stable",
+        "actions": []
+    }
+
+    # Symptoms list from Image 41 & 42
+    malaria_triggers = {
+        "high_fever_with_chills", "severe_sweating", "headache",
+        "nausea_vomiting", "muscle_pain", "fatigue", "dry_cough"
+    }
+
+    # Detection logic
+    if symptoms_input.intersection(malaria_triggers):
+        # Checking for high-risk signs
+        is_severe = "high_fever_with_chills" in symptoms_input or "severe_sweating" in symptoms_input
+
+        result.update({
+            "condition": "MALARIA SUSPECTED",
+            "status": "MEDICAL ATTENTION REQUIRED",
+            "actions": [
+                "1. DIAGNOSIS: Immediate Blood Smear test (Gold Standard) or Rapid Diagnostic Test (RDT).",
+                "2. CBC TEST: Check for anemia (low hemoglobin) due to red blood cell destruction (Image 43).",
+                "3. TREATMENT: Start ACT (Artemisinin-based Combination Therapy) as per medical advice.",
+                "4. HYDRATION: Maintain fluid intake to manage high fever and sweating.",
+                "5. MONITORING: Watch for signs of complications like jaundice or breathing difficulty.",
+                "6. PREVENTION: Use mosquito repellents and remove stagnant water to stop breeding."
+            ]
+        })
+
+        if is_severe:
+            result["actions"].insert(0, "NOTE: Cyclical high fever with intense shivering detected. Common in Plasmodium infection.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Malaria Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: High fever with chills and vomiting (Image 41)
+    test_symptoms = {"high_fever_with_chills", "headache", "nausea_vomiting"}
+    report = malaria_algorithm(symptoms_input=test_symptoms)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Status: {0}".format(report['status']))
+    print("\n[MALARIA CARE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Asthma Monitoring & Emergency Action
+import datetime
+
+def asthma_algorithm(symptoms_input, vitals_input):
+    """
+    Logic for Asthma (दमा) based on respiratory patterns.
+    Focuses on airway inflammation and wheezing.
+    """
+    result = {
+        "condition": "Respiratory Health Monitoring",
+        "status": "Stable",
+        "actions": []
+    }
+
+    # Core Symptoms of Asthma
+    asthma_triggers = {
+        "shortness_of_breath", "chest_tightness", "wheezing_sound",
+        "coughing_at_night", "difficulty_speaking", "rapid_breathing"
+    }
+
+    # Extracting SpO2 for severity check
+    spo2 = vitals_input.get("spo2", 98)
+
+    # Detection logic
+    has_asthma_symptoms = symptoms_input.intersection(asthma_triggers)
+    
+    if has_asthma_symptoms:
+        status_level = "MODERATE"
+        
+        # Checking for severe attack signs
+        if spo2 < 92 or "difficulty_speaking" in symptoms_input:
+            status_level = "CRITICAL - ASTHMA ATTACK"
+
+        result.update({
+            "condition": "ASTHMA SYMPTOMS DETECTED",
+            "status": status_level,
+            "actions": [
+                "1. INHALER: Use a rescue inhaler (Bronchodilator) immediately as prescribed.",
+                "2. POSITION: Sit upright and loosen tight clothing. Do not lie down.",
+                "3. BREATHING: Try to take slow, steady breaths to stay calm.",
+                "4. TRIGGERS: Move away from dust, smoke, or strong odors that might have triggered it.",
+                "5. MONITORING: If symptoms do not improve in 10-15 mins, seek emergency help.",
+                "6. LONG TERM: Follow a regular controller medication plan to prevent future attacks."
+            ]
+        })
+
+        if status_level == "CRITICAL":
+            result["actions"].insert(0, "URGENT: Severe respiratory distress detected. Administer nebulization and contact a doctor immediately.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Asthma Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Wheezing and chest tightness
+    test_symptoms = {"wheezing_sound", "chest_tightness", "shortness_of_breath"}
+    test_vitals = {"spo2": 94}
+    
+    report = asthma_algorithm(test_symptoms, test_vitals)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Status: {0}".format(report['status']))
+    print("\n[ASTHMA CARE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Hypertension (High Blood Pressure) Monitoring
+import datetime
+
+def hypertension_algorithm(vitals_input, symptoms_input):
+    """
+    Logic for Hypertension based on Images 44-49.
+    Focuses on Systolic/Diastolic readings and lifestyle risks.
+    """
+    result = {
+        "condition": "Cardiovascular Health",
+        "status": "Normal",
+        "category": "Healthy",
+        "actions": []
+    }
+
+    # Extracting Blood Pressure vitals
+    systolic = vitals_input.get("systolic_bp", 120)
+    diastolic = vitals_input.get("diastolic_bp", 80)
+
+    # Classification logic based on medical standards (Image 44 & 45)
+    if systolic >= 180 or diastolic >= 120:
+        result["status"] = "EMERGENCY"
+        result["category"] = "HYPERTENSIVE CRISIS"
+    elif systolic >= 140 or diastolic >= 90:
+        result["status"] = "HIGH"
+        result["category"] = "HYPERTENSION STAGE 2"
+    elif systolic >= 130 or diastolic >= 80:
+        result["status"] = "ELEVATED"
+        result["category"] = "HYPERTENSION STAGE 1"
+    
+    # Symptom check (Image 46 & 47)
+    bp_symptoms = {
+        "severe_headache", "chest_pain", "vision_changes", 
+        "dizziness", "nosebleed", "shortness_of_breath"
+    }
+    
+    detected_symptoms = symptoms_input.intersection(bp_symptoms)
+
+    if result["status"] != "Normal":
+        result["actions"] = [
+            "1. MONITORING: Re-check BP after 5 minutes of rest.",
+            "2. DIET: Reduce sodium (salt) intake immediately (Image 48).",
+            "3. LIFESTYLE: Engage in regular physical activity like walking (Image 49).",
+            "4. DASH DIET: Increase intake of fruits, vegetables, and whole grains.",
+            "5. CONSULTATION: If BP remains >140/90, consult a doctor for medication."
+        ]
+
+        if result["status"] == "EMERGENCY":
+            result["actions"].insert(0, "URGENT: Hypertensive Crisis! Risk of stroke or organ damage. Seek immediate medical care.")
+        
+        if detected_symptoms:
+            result["actions"].append("NOTE: Symptoms like headache or dizziness detected. Do not ignore.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Hypertension Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: High BP reading
+    test_vitals = {"systolic_bp": 155, "diastolic_bp": 95}
+    test_symptoms = {"severe_headache"}
+    
+    report = hypertension_algorithm(test_vitals, test_symptoms)
+
+    print("BP Category: {0}".format(report['category']))
+    print("Urgency Status: {0}".format(report['status']))
+    print("\n[HYPERTENSION MANAGEMENT PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Measles (गोवर) Detection
+import datetime
+
+def measles_algorithm(symptoms_input):
+    """
+    Logic for Measles (गोवर) based on Images 31, 32, and 33.
+    Focuses on red rashes, Koplik spots, and high fever.
+    """
+    result = {
+        "condition": "Infectious Disease Monitoring",
+        "status": "Stable",
+        "actions": []
+    }
+
+    # Symptoms list from Image 31 & 32
+    measles_triggers = {
+        "high_fever", "dry_cough", "runny_nose", "red_watery_eyes",
+        "koplik_spots", "red_rashes_face", "red_rashes_body", "sore_throat"
+    }
+
+    # Detection logic
+    if symptoms_input.intersection(measles_triggers):
+        # Checking for classic clinical signs
+        has_koplik = "koplik_spots" in symptoms_input
+        has_rash = "red_rashes_face" in symptoms_input or "red_rashes_body" in symptoms_input
+
+        result.update({
+            "condition": "MEASLES (GOVAR) SUSPECTED",
+            "status": "CONTAGIOUS - ISOLATION REQUIRED",
+            "actions": [
+                "1. ISOLATION: Patient must stay in a separate room to prevent spread to others.",
+                "2. DIAGNOSIS: Physical exam for Koplik spots and blood test (IgM) for confirmation.",
+                "3. TREATMENT: No specific antiviral; focus on reducing fever and hydration.",
+                "4. VITAMIN A: Administer Vitamin A supplements as per WHO guidelines (Image 33).",
+                "5. MONITORING: Watch for complications like Pneumonia or Ear Infection.",
+                "6. PREVENTION: Ensure MMR vaccination for household members if not already vaccinated."
+            ]
+        })
+
+        if has_koplik:
+            result["actions"].insert(0, "NOTE: Koplik spots (small white spots in mouth) detected. This is a definitive early sign.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    
+    print("--- Nevora AI: Measles Module ---")
+    print("Log Time: {0}\n".format(current_time))
+
+    # Test Case: High fever and rashes starting from face (Image 32)
+    test_symptoms = {"high_fever", "red_rashes_face", "koplik_spots", "runny_nose"}
+    report = measles_algorithm(symptoms_input=test_symptoms)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Status: {0}".format(report['status']))
+    print("\n[INFECTION CONTROL PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Dengue Detection & Platelet Monitoring
+import datetime
+
+def dengue_algorithm(symptoms_input, vitals_input):
+    """
+    Logic for Dengue (डेंग्यू) based on Images 34, 35, 36, and 37.
+    Focuses on high fever, joint pain, and platelet count.
+    """
+    result = {
+        "condition": "Infectious Health Monitoring",
+        "status": "Stable",
+        "actions": []
+    }
+
+    # Symptoms list from Image 34 & 35
+    dengue_triggers = {
+        "high_fever", "severe_headache", "pain_behind_eyes",
+        "joint_and_muscle_pain", "nausea_vomiting", "skin_rash",
+        "bleeding_from_nose_gums", "abdominal_pain"
+    }
+
+    # Extracting Platelet Count (assuming input in lakhs/mm3)
+    platelet_count = vitals_input.get("platelets", 2.5) # Default 2.5 Lakhs
+
+    # Detection logic
+    has_dengue_symptoms = symptoms_input.intersection(dengue_triggers)
+    
+    if has_dengue_symptoms or platelet_count < 1.5:
+        status_level = "MODERATE"
+        if platelet_count < 0.5 or "bleeding_from_nose_gums" in symptoms_input:
+            status_level = "CRITICAL - HEMORRHAGIC RISK"
+
+        result.update({
+            "condition": "DENGUE SUSPECTED",
+            "status": status_level,
+            "actions": [
+                "1. DIAGNOSIS: Immediate NS1 Antigen test or Dengue IgM/IgG blood test.",
+                "2. MONITORING: Check Platelet Count every 12-24 hours (Image 36).",
+                "3. HYDRATION: Drink plenty of fluids (ORC, coconut water, water) to prevent dehydration.",
+                "4. MEDICATION: Use Paracetamol for fever; AVOID Ibuprofen/Aspirin (Image 37).",
+                "5. DANGER SIGNS: Watch for severe stomach pain or continuous vomiting.",
+                "6. PREVENTION: Use mosquito nets and eliminate stagnant water around."
+            ]
+        })
+
+        if platelet_count < 1.0:
+            result["actions"].insert(0, "URGENT: Low Platelet Count detected. Consult a doctor for possible hospitalization.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    
+    print("--- Nevora AI: Dengue Module ---")
+    print("Log Time: {0}\n".format(current_time))
+
+    # Test Case: High fever, joint pain and low platelets
+    test_symptoms = {"high_fever", "joint_and_muscle_pain", "pain_behind_eyes"}
+    test_vitals = {"platelets": 0.8} # 80,000 count
+    
+    report = dengue_algorithm(test_symptoms, test_vitals)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Status: {0}".format(report['status']))
+    print("\n[MEDICAL PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Dengue Treatment & Warning Signs
+import datetime
+
+def dengue_advanced_logic(symptoms_input, vitals_input):
+    """
+    Advanced Logic for Dengue based on Images 34, 35, 36, and 37.
+    Focuses on Phase detection (Febrile/Critical/Recovery).
+    """
+    result = {
+        "condition": "Dengue Monitoring",
+        "phase": "Observation",
+        "urgency": "Normal",
+        "protocol": []
+    }
+
+    # Platelet data from Image 36
+    platelets = vitals_input.get("platelet_count", 250000) # Standard count
+    
+    # Warning signs from Image 35 & 37
+    warning_signs = {
+        "severe_abdominal_pain", "persistent_vomiting", "rapid_breathing",
+        "bleeding_gums", "fatigue_restlessness", "blood_in_vomit"
+    }
+
+    detected_warnings = symptoms_input.intersection(warning_signs)
+
+    # 1. Critical Phase Detection
+    if platelets < 100000 or detected_warnings:
+        result.update({
+            "phase": "CRITICAL PHASE",
+            "urgency": "EMERGENCY",
+            "protocol": [
+                "1. HOSPITALIZATION: Immediate admission required for IV fluid management.",
+                "2. MONITORING: Hematocrit and Platelet count every 6-12 hours.",
+                "3. WARNING: Watch for plasma leakage and organ impairment.",
+                "4. MEDICATION: Strictly avoid NSAIDs like Ibuprofen or Aspirin (Image 37)."
+            ]
+        })
+    
+    # 2. Febrile Phase (Early Stage - Image 34)
+    elif "high_fever" in symptoms_input:
+        result.update({
+            "phase": "FEBRILE PHASE",
+            "urgency": "MODERATE",
+            "protocol": [
+                "1. HYDRATION: Minimum 2-3 liters of oral fluids (ORS, juices) daily.",
+                "2. FEVER CONTROL: Use Paracetamol only.",
+                "3. TEST: Perform NS1 Antigen or Dengue IgM test.",
+                "4. REST: Complete bed rest under mosquito net."
+            ]
+        })
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    print("--- Nevora AI: Advanced Dengue Module ---")
+    print("Timestamp: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Example: Platelets dropping and abdominal pain detected
+    current_symptoms = {"high_fever", "severe_abdominal_pain", "joint_pain"}
+    current_vitals = {"platelet_count": 85000}
+
+    report = dengue_advanced_logic(current_symptoms, current_vitals)
+
+    print("Detected Phase: {0}".format(report['phase']))
+    print("Urgency Level: {0}".format(report['urgency']))
+    print("\nAction Plan:")
+    for step in report['protocol']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Pneumonia Detection & Care
+import datetime
+
+def pneumonia_algorithm(symptoms_input, vitals_input):
+    """
+    Logic for Pneumonia (न्यूमोनिया) based on Images 38, 39, and 40.
+    Focuses on lung infection, chest pain, and SpO2 levels.
+    """
+    result = {
+        "condition": "Respiratory Health Monitoring",
+        "status": "Stable",
+        "actions": []
+    }
+
+    # Symptoms list from Image 38 & 39
+    pneumonia_triggers = {
+        "cough_with_phlegm", "fever_with_chills", "shortness_of_breath",
+        "sharp_chest_pain", "fatigue", "nausea_vomiting", "confusion_in_elderly"
+    }
+
+    # Extracting SpO2 and Temperature
+    spo2 = vitals_input.get("spo2", 98)
+    temperature = vitals_input.get("temperature", 98.6)
+
+    # Detection logic
+    has_pneumonia_symptoms = symptoms_input.intersection(pneumonia_triggers)
+    
+    if has_pneumonia_symptoms or spo2 < 94:
+        status_level = "MODERATE"
+        if spo2 < 90 or "shortness_of_breath" in symptoms_input:
+            status_level = "CRITICAL - SEVERE INFECTION"
+
+        result.update({
+            "condition": "PNEUMONIA SUSPECTED",
+            "status": status_level,
+            "actions": [
+                "1. DIAGNOSIS: Immediate Chest X-ray or CT Scan to check for fluid in lungs (Image 40).",
+                "2. BLOOD TEST: Perform CBC and Sputum test to identify the pathogen (Bacteria/Virus).",
+                "3. PULSE OXIMETRY: Continuously monitor SpO2 levels.",
+                "4. TREATMENT: Start Antibiotics or Antivirals as prescribed by the doctor.",
+                "5. BREATHING SUPPORT: If SpO2 < 92%, oxygen therapy or nebulization may be required.",
+                "6. HYDRATION: Drink warm fluids and take plenty of rest."
+            ]
+        })
+
+        if status_level == "CRITICAL":
+            result["actions"].insert(0, "URGENT: Rapid breathing and low oxygen detected. Immediate hospitalization required.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Pneumonia Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Cough with phlegm and low oxygen (Image 38)
+    test_symptoms = {"cough_with_phlegm", "fever_with_chills", "shortness_of_breath"}
+    test_vitals = {"spo2": 91, "temperature": 102}
+    
+    report = pneumonia_algorithm(test_symptoms, test_vitals)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Status: {0}".format(report['status']))
+    print("\n[RESPIRATORY PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Heart Attack (Myocardial Infarction) Detection
+import datetime
+
+def heart_attack_algorithm(symptoms_input, vitals_input):
+    """
+    Critical logic for Heart Attack detection.
+    Focuses on chest pain, radiating pain, and heart rate.
+    """
+    result = {
+        "condition": "Cardiovascular Monitoring",
+        "status": "Stable",
+        "actions": []
+    }
+
+    # Core Symptoms of Heart Attack
+    cardiac_triggers = {
+        "chest_pain_pressure", "pain_radiating_to_left_arm", "pain_in_jaw_back",
+        "excessive_sweating", "shortness_of_breath", "nausea_dizziness",
+        "heart_palpitations", "extreme_anxiety"
+    }
+
+    # Extracting Heart Rate and BP
+    heart_rate = vitals_input.get("heart_rate", 72)
+    systolic_bp = vitals_input.get("systolic_bp", 120)
+
+    # Detection logic
+    is_high_risk = "chest_pain_pressure" in symptoms_input and "excessive_sweating" in symptoms_input
+    
+    if symptoms_input.intersection(cardiac_triggers) or heart_rate > 100 or heart_rate < 50:
+        status_level = "EMERGENCY"
+        
+        result.update({
+            "condition": "HEART ATTACK SUSPECTED",
+            "status": status_level,
+            "actions": [
+                "1. IMMEDIATE ACTION: Call for an ambulance or emergency medical team.",
+                "2. POSITION: Keep the patient sitting down and calm to reduce heart strain.",
+                "3. ASPIRIN: If recommended by a doctor, give one 325mg Aspirin to chew (if not allergic).",
+                "4. DIAGNOSIS: Perform an immediate ECG (Electrocardiogram) to check heart rhythm.",
+                "5. LABS: Check Cardiac Troponin levels in the blood.",
+                "6. CPR/AED: If the patient becomes unconscious and has no pulse, start CPR immediately."
+            ]
+        })
+
+        if is_high_risk:
+            result["actions"].insert(0, "CRITICAL: Severe chest pressure and cold sweat detected. Time is Muscle - Get to a hospital NOW.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Heart Attack Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Chest pain radiating to arm with high heart rate
+    test_symptoms = {"chest_pain_pressure", "pain_radiating_to_left_arm", "excessive_sweating"}
+    test_vitals = {"heart_rate": 110, "systolic_bp": 150}
+    
+    report = heart_attack_algorithm(test_symptoms, test_vitals)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Status: {0}".format(report['status']))
+    print("\n[EMERGENCY CARDIAC PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Alzheimer's Detection
+import datetime
+
+def alzheimers_algorithm(symptoms_input):
+    """
+    Logic for Alzheimer's (स्मृतीभ्रंश) based on Images 22, 23, and 24.
+    Focuses on memory loss, confusion, and cognitive decline.
+    """
+    result = {
+        "condition": "Cognitive Health Monitoring",
+        "status": "Stable",
+        "actions": []
+    }
+
+    # Symptoms list from Image 22 & 23
+    alz_triggers = {
+        "memory_loss", "forgetting_recent_events", "repeating_questions",
+        "difficulty_in_daily_tasks", "getting_lost_in_known_places",
+        "poor_judgment", "language_problems", "mood_swings", "confusion"
+    }
+
+    # Detection logic
+    if symptoms_input.intersection(alz_triggers):
+        # Checking for high-risk signs
+        critical_signs = "getting_lost_in_known_places" in symptoms_input or "memory_loss" in symptoms_input
+
+        result.update({
+            "condition": "ALZHEIMER'S SUSPECTED (DEMENTIA)",
+            "status": "PROGRESSIVE CARE REQUIRED",
+            "actions": [
+                "1. DIAGNOSIS: Consult a Neurologist for Cognitive Tests and Brain Imaging (MRI/CT).",
+                "2. LAB TESTS: Perform blood tests to rule out vitamin deficiencies.",
+                "3. MEDICATION: Doctors may prescribe meds to improve memory and control behavior.",
+                "4. LIFESTYLE: Encourage healthy diet, regular exercise, and mental puzzles.",
+                "5. CAREGIVER SUPPORT: Provide a safe, familiar environment and help with daily tasks.",
+                "6. THERAPY: Consider Cognitive Stimulation Therapy or Memory Therapy."
+            ]
+        })
+
+        if critical_signs:
+            result["actions"].insert(0, "URGENT NOTE: Significant memory loss or disorientation detected. Prioritize medical history check.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    
+    print("--- Nevora AI: Alzheimer's Module ---")
+    print("Log Time: {0}\n".format(current_time))
+
+    # Test Case: Forgetting names and getting lost (Image 22)
+    test_symptoms = {"memory_loss", "getting_lost_in_known_places", "language_problems"}
+    report = alzheimers_algorithm(symptoms_input=test_symptoms)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Status: {0}".format(report['status']))
+    print("\n[RECOMMENDED CARE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Brain Tumor Detection
+import datetime
+
+def brain_tumor_algorithm(symptoms_input):
+    """
+    Logic for Brain Tumor (मेंदूतील गाठ) based on Images 25, 26, and 27.
+    Focuses on persistent headaches, seizures, and cognitive changes.
+    """
+    result = {
+        "condition": "Neurological Monitoring",
+        "status": "Stable",
+        "actions": []
+    }
+
+    # Symptoms list from Image 25
+    tumor_triggers = {
+        "persistent_headache", "morning_headache", "seizures_fits",
+        "vision_problems", "hearing_loss", "speech_difficulty",
+        "personality_changes", "memory_loss", "balance_issues",
+        "nausea_vomiting_morning"
+    }
+
+    # Detection logic
+    if symptoms_input.intersection(tumor_triggers):
+        # Critical combination check
+        is_high_risk = "persistent_headache" in symptoms_input and "seizures_fits" in symptoms_input
+
+        result.update({
+            "condition": "BRAIN TUMOR SUSPECTED",
+            "status": "REQUIRES SPECIALIST EVALUATION",
+            "actions": [
+                "1. IMAGING: Arrange for an urgent MRI or CT Scan with contrast to locate the tumor.",
+                "2. BIOPSY: If a mass is found, a tissue sample (Biopsy) is needed to check if it is Benign or Malignant.",
+                "3. SURGERY: Primary treatment is often surgical removal if the tumor is accessible.",
+                "4. RADIOTHERAPY: High-energy beams may be used to kill remaining tumor cells.",
+                "5. CHEMOTHERAPY: Use of specialized drugs to destroy cancer cells, often used for malignant cases.",
+                "6. SYMPTOM MANAGEMENT: Steroids may be prescribed to reduce brain swelling (Edema)."
+            ]
+        })
+
+        if is_high_risk:
+            result["actions"].insert(0, "URGENT: Persistent headache combined with new-onset seizures is a high-priority warning sign.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    
+    print("--- Nevora AI: Brain Tumor Module ---")
+    print("Log Time: {0}\n".format(current_time))
+
+    # Test Case: Persistent headache and vision problems (Image 25)
+    test_symptoms = {"persistent_headache", "vision_problems", "morning_headache"}
+    report = brain_tumor_algorithm(symptoms_input=test_symptoms)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Status: {0}".format(report['status']))
+    print("\n[DIAGNOSTIC & TREATMENT PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: COVID-19 Detection & Respiratory Support
+import datetime
+
+def covid19_algorithm(symptoms_input, vitals_input):
+    """
+    Logic for COVID-19 and Respiratory Distress.
+    Focuses on SpO2 levels, fever, and dry cough.
+    """
+    result = {
+        "condition": "Respiratory Health Monitoring",
+        "status": "Stable",
+        "actions": []
+    }
+
+    # Common symptoms of COVID-19
+    covid_triggers = {
+        "fever", "dry_cough", "tiredness", "loss_of_taste_smell",
+        "sore_throat", "difficulty_breathing", "chest_pain"
+    }
+
+    # Extracting vitals (assuming vitals_input is a dictionary)
+    spo2 = vitals_input.get("spo2", 100) # Default 100%
+
+    # Detection logic
+    has_covid_symptoms = symptoms_input.intersection(covid_triggers)
+    
+    if has_covid_symptoms or spo2 < 95:
+        status_level = "MODERATE"
+        if spo2 < 90 or "difficulty_breathing" in symptoms_input:
+            status_level = "CRITICAL"
+
+        result.update({
+            "condition": "COVID-19 SUSPECTED / RESPIRATORY DISTRESS",
+            "status": status_level,
+            "actions": [
+                "1. TESTING: Immediate RT-PCR or Rapid Antigen Test is required.",
+                "2. OXYGEN MONITORING: Monitor SpO2 levels every 2-4 hours.",
+                "3. ISOLATION: Self-isolate immediately to prevent spreading the virus.",
+                "4. IMAGING: Chest X-ray or HRCT Scan if breathing difficulty increases.",
+                "5. MEDICATION: Supportive care with antipyretics for fever and hydration.",
+                "6. EMERGENCY: If SpO2 falls below 92%, immediate hospitalization and oxygen support required."
+            ]
+        })
+
+        if spo2 < 90:
+            result["actions"].insert(0, "URGENT: Hypoxia detected (Low Oxygen). Start oxygen therapy immediately.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    
+    print("--- Nevora AI: COVID-19 Module ---")
+    print("Log Time: {0}\n".format(current_time))
+
+    # Test Case: Fever, dry cough, and low oxygen
+    test_symptoms = {"fever", "dry_cough", "difficulty_breathing"}
+    test_vitals = {"spo2": 88} # Critical case
+    
+    report = covid19_algorithm(test_symptoms, test_vitals)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Status: {0}".format(report['status']))
+    print("\n[EMERGENCY PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Tuberculosis (TB) Detection
+import datetime
+
+def tuberculosis_algorithm(symptoms_input):
+    """
+    Logic for Tuberculosis (क्षयरोग) based on Images 28, 29, and 30.
+    Focuses on persistent cough, weight loss, and night sweats.
+    """
+    result = {
+        "condition": "Respiratory Health Monitoring",
+        "status": "Stable",
+        "actions": []
+    }
+
+    # Symptoms list from Image 28 & 29
+    tb_triggers = {
+        "cough_more_than_3_weeks", "blood_in_sputum", "chest_pain",
+        "unexplained_weight_loss", "loss_of_appetite", "fever_especially_evening",
+        "night_sweats", "fatigue_weakness"
+    }
+
+    # Detection logic
+    if symptoms_input.intersection(tb_triggers):
+        # High-risk symptoms check
+        is_high_risk = "cough_more_than_3_weeks" in symptoms_input or "blood_in_sputum" in symptoms_input
+
+        result.update({
+            "condition": "TUBERCULOSIS (TB) SUSPECTED",
+            "status": "REQUIRES MEDICAL EVALUATION",
+            "actions": [
+                "1. DIAGNOSIS: Perform Sputum Smear Microscopy or GeneXpert test for confirmation.",
+                "2. IMAGING: Arrange for a Chest X-ray to look for abnormalities in lungs (Image 30).",
+                "3. SKIN TEST: Mantoux Tuberculin Skin Test (TST) may be required.",
+                "4. TREATMENT: Start long-term antibiotic course (DOTS) as prescribed by the doctor.",
+                "5. HYGIENE: Patient should wear a mask and cover mouth while coughing to prevent spread.",
+                "6. NUTRITION: High-protein diet and rest are essential for recovery (Image 30)."
+            ]
+        })
+
+        if is_high_risk:
+            result["actions"].insert(0, "URGENT: Cough lasting > 3 weeks or blood in cough is a major TB indicator.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    
+    print("--- Nevora AI: Tuberculosis Module ---")
+    print("Log Time: {0}\n".format(current_time))
+
+    # Test Case: Long term cough and weight loss (Image 28)
+    test_symptoms = {"cough_more_than_3_weeks", "unexplained_weight_loss", "night_sweats"}
+    report = tuberculosis_algorithm(symptoms_input=test_symptoms)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Status: {0}".format(report['status']))
+    print("\n[DIAGNOSTIC & CARE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+import datetime
+
+def diagnostic_algorithm_frame(is_conscious, symptoms_input):
+    """
+    Nevora AI Diagnostic Algorithm - Core Framework
+    Includes BE FAST criteria for Stroke and other emergencies.
+    """
+    
+    result = {
+        "potential_condition": "System Unable to Determine",
+        "urgency": "Low",
+        "recommended_action": ["Consult a medical professional."]
+    }
+
+    # 1. Critical Emergency: Unconscious Patient
+    if not is_conscious:
+        result.update({
+            "potential_condition": "UNCONSCIOUS PATIENT",
+            "urgency": "MAXIMUM EMERGENCY",
+            "recommended_action": [
+                "1. CALL 108 IMMEDIATELY.",
+                "2. Monitor breathing and pulse.",
+                "3. Perform CPR if trained and necessary."
+            ]
+        })
+        return result
+
+    # 2. Brain Stroke Logic (Based on BE FAST criteria)
+    stroke_symptoms = {
+        "sudden_loss_of_balance", "sudden_dizziness", 
+        "sudden_blurred_vision", "loss_of_vision",    
+        "sudden_facial_drooping", "face_numbness",    
+        "sudden_arm_weakness", "arm_numbness",        
+        "sudden_slurred_speech", "speech_confusion"   
+    }
+
+    if symptoms_input.intersection(stroke_symptoms):
+        result.update({
+            "potential_condition": "BRAIN STROKE (MEDICAL EMERGENCY)",
+            "urgency": "HIGH EMERGENCY",
+            "recommended_action": [
+                "1. CALL 108 / EMERGENCY SERVICES IMMEDIATELY.",
+                "2. Note the TIME of first symptom (Golden Hour).",
+                "3. Keep the patient still. Do not give water or food.",
+                "4. Diagnosis requires CT/MRI scan at a hospital."
+            ]
+        })
+        return result
+
+    # 3. Heart Attack Logic
+    elif "chest_pain" in symptoms_input or "chest_tightness" in symptoms_input:
+        result.update({
+            "potential_condition": "SUSPECTED HEART ATTACK",
+            "urgency": "HIGH EMERGENCY",
+            "recommended_action": [
+                "1. CALL 108 IMMEDIATELY.",
+                "2. Keep patient in a sitting position.",
+                "3. Monitor heart rate continuously."
+            ]
+        })
+        return result
+
+    return result
+
+# --- Main Implementation ---
+if __name__ == "__main__":
+    # Getting current time
+    now = datetime.datetime.now()
+    current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    
+    # Using .format() instead of f-string to avoid SyntaxError on older compilers
+    header = "\n--- Nevora AI Diagnostic Log | Time: {} ---\n".format(current_time)
+    print(header)
+
+    # Example Test Case: Stroke Symptoms
+    user_symptoms = {"sudden_facial_drooping", "sudden_slurred_speech"}
+    
+    output = diagnostic_algorithm_frame(is_conscious=True, symptoms_input=user_symptoms)
+    
+    print("[POTENTIAL CONDITION]: " + str(output['potential_condition']))
+    print("[URGENCY LEVEL]: " + str(output['urgency']))
+    print("[RECOMMENDED ACTIONS]:")
+    for action in output['recommended_action']:
+        print("- " + str(action))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Epilepsy/Seizure Detection
+import datetime
+
+def epilepsy_algorithm(is_conscious, symptoms_input):
+    """
+    Logic specifically for Epilepsy (Fits) based on Image 14 and 15.
+    """
+    result = {
+        "condition": "Monitoring for Seizures",
+        "status": "Stable",
+        "actions": []
+    }
+
+    # Symptoms list from Image 14
+    seizure_triggers = {
+        "sudden_fall", "body_shaking", "muscle_stiffness", 
+        "foaming_at_mouth", "staring_into_space", "loss_of_awareness"
+    }
+
+    if not is_conscious or symptoms_input.intersection(seizure_triggers):
+        result.update({
+            "condition": "EPILEPTIC SEIZURE (FITS) DETECTED",
+            "status": "CRITICAL",
+            "actions": [
+                "1. FIRST AID: Turn the patient to their side (Recovery Position).",
+                "2. SAFETY: Move away sharp or dangerous objects from the patient.",
+                "3. CAUTION: Do NOT put anything in the patient's mouth (No spoons, no water).",
+                "4. MONITOR: If the seizure lasts more than 5 minutes, seek immediate doctor intervention.",
+                "5. MEDICAL: Diagnosis requires EEG or MRI as per clinical protocol."
+            ]
+        })
+    
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    
+    print("--- Nevora AI: Epilepsy Module ---")
+    print("Log Time: {}\n".format(current_time))
+
+    # Test: Detecting a sudden fall and foaming
+    test_symptoms = {"sudden_fall", "foaming_at_mouth"}
+    report = epilepsy_algorithm(is_conscious=True, symptoms_input=test_symptoms)
+
+    print("Condition: {}".format(report['condition']))
+    print("Status: {}".format(report['status']))
+    print("Immediate Steps:")
+    for step in report['actions']:
+        print("- {}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Meningitis Detection
+import datetime
+
+def meningitis_algorithm(is_conscious, symptoms_input):
+    """
+    Logic for Meningitis (मेंदूज्वर) based on Images 16, 17, and 18.
+    Focuses on high fever, stiff neck, and light sensitivity.
+    """
+    result = {
+        "condition": "Monitoring for CNS Infection",
+        "status": "Stable",
+        "actions": []
+    }
+
+    # Symptoms list from Image 16 & 17
+    meningitis_triggers = {
+        "high_fever", "severe_headache", "stiff_neck", 
+        "nausea_vomiting", "confusion_sleepiness", 
+        "photophobia", "skin_rash"
+    }
+
+    # Detection logic
+    if symptoms_input.intersection(meningitis_triggers):
+        # Specific check for high-risk symptoms
+        is_high_risk = "stiff_neck" in symptoms_input and "high_fever" in symptoms_input
+        
+        result.update({
+            "condition": "MENINGITIS SUSPECTED",
+            "status": "CRITICAL - IMMEDIATE MEDICAL ATTENTION",
+            "actions": [
+                "1. EMERGENCY: Alert medical staff immediately. This can be life-threatening.",
+                "2. DIAGNOSIS: Prepare for 'Spinal Tap' (Lumbar Puncture) to check CSF (Image 17).",
+                "3. IMAGING: Arrange for urgent CT Scan or MRI to check for brain swelling.",
+                "4. TREATMENT: Start IV Antibiotics immediately if Bacterial Meningitis is suspected (Image 17).",
+                "5. CARE: Keep the patient in a quiet, dark room due to Photophobia (light sensitivity)."
+            ]
+        })
+        
+        if is_high_risk:
+            result["actions"].insert(0, "URGENT: Stiff neck + High fever is a classic sign. Prioritize Lumbar Puncture.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    
+    print("--- Nevora AI: Meningitis Module ---")
+    print("Log Time: {}\n".format(current_time))
+
+    # Test Case: Stiff neck, High Fever, and Headache (Image 16)
+    test_symptoms = {"stiff_neck", "high_fever", "severe_headache"}
+    report = meningitis_algorithm(is_conscious=True, symptoms_input=test_symptoms)
+
+    print("Condition: {}".format(report['condition']))
+    print("Status: {}".format(report['status']))
+    print("\n[IMMEDIATE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Migraine Detection
+import datetime
+
+def migraine_algorithm(symptoms_input):
+    """
+    Logic for Migraine (अर्धशिशी) based on Images 19, 20, and 21.
+    Focuses on one-sided headache, aura, and sensitivity to light/sound.
+    """
+    result = {
+        "condition": "Headache Monitoring",
+        "status": "Stable",
+        "actions": []
+    }
+
+    # Symptoms list from Image 19
+    migraine_triggers = {
+        "one_sided_headache", "throbbing_pain", "nausea_vomiting",
+        "sensitivity_to_light", "sensitivity_to_sound", "aura_visual_disturbances",
+        "dizziness", "weakness"
+    }
+
+    # Detection logic
+    if symptoms_input.intersection(migraine_triggers):
+        # Checking for classic Migraine signs
+        has_aura = "aura_visual_disturbances" in symptoms_input
+        has_severe_sensitivity = "sensitivity_to_light" in symptoms_input and "sensitivity_to_sound" in symptoms_input
+
+        result.update({
+            "condition": "MIGRAINE SUSPECTED",
+            "status": "MODERATE DISCOMFORT",
+            "actions": [
+                "1. IMMEDIATE RELIEF: Rest in a dark, quiet room (Image 21).",
+                "2. TRIGGER MANAGEMENT: Avoid strong smells, bright sunlight, or long screen time (Image 21).",
+                "3. LIFESTYLE: Ensure 7-8 hours of sleep and maintain hydration (Image 20).",
+                "4. MEDICAL: Consult a neurologist if headaches are frequent or severe (Image 21).",
+                "5. DIAGNOSIS: If cause is unclear, doctor may suggest CT Scan or MRI (Image 20)."
+            ]
+        })
+
+        if has_aura:
+            result["actions"].insert(0, "NOTE: Aura detected (flashing lines/blurred vision). This is a classic pre-migraine sign.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    
+    print("--- Nevora AI: Migraine Module ---")
+    print("Log Time: {0}\n".format(current_time))
+
+    # Test Case: One-sided headache and light sensitivity (Image 19)
+    test_symptoms = {"one_sided_headache", "sensitivity_to_light", "throbbing_pain"}
+    report = migraine_algorithm(symptoms_input=test_symptoms)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Status: {0}".format(report['status']))
+    print("\n[RECOMMENDED PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Cancer Risk Assessment & Warning Signs
+import datetime
+
+def cancer_risk_algorithm(symptoms_input, patient_history):
+    """
+    Logic for early cancer warning signs based on Images 109 to 112.
+    Focuses on 'CAUTION' symptoms and abnormal cell growth.
+    """
+    result = {
+        "condition": "Oncology Screening",
+        "status": "Observation",
+        "priority_level": "Normal",
+        "actions": []
+    }
+
+    # "CAUTION" Symptoms - Standard Medical Warning Signs
+    cancer_warning_signs = {
+        "unexplained_weight_loss", "persistent_lump_or_thickening",
+        "change_in_bowel_bladder_habits", "sore_that_does_not_heal",
+        "unusual_bleeding_discharge", "persistent_indigestion_difficulty_swallowing",
+        "obvious_change_in_wart_or_mole", "nagging_cough_hoarseness"
+    }
+
+    # Detection logic
+    detected_signs = symptoms_input.intersection(cancer_warning_signs)
+    
+    if detected_signs:
+        result["condition"] = "POTENTIAL ONCOLOGICAL RISK"
+        result["priority_level"] = "URGENT"
+        result["status"] = "DIAGNOSTIC WORKUP REQUIRED"
+
+        result.update({
+            "actions": [
+                "1. BIOPSY: The gold standard for confirming cancer. A tissue sample is examined (Image 109).",
+                "2. IMAGING: CT Scan, MRI, or PET Scan to locate and measure abnormal growths.",
+                "3. BLOOD MARKERS: Check for specific tumor markers (e.g., PSA, CA-125, AFP).",
+                "4. SCREENING: Regular mammograms, pap smears, or colonoscopies based on age/gender (Image 112).",
+                "5. CONSULT: Immediate consultation with an Oncologist for expert evaluation.",
+                "6. MONITOR: Track any changes in size, shape, or color of existing lumps or moles (Image 110)."
+            ]
+        })
+
+        if "persistent_lump_or_thickening" in detected_signs:
+            result["actions"].insert(0, "ALERT: New or changing lumps should be evaluated by imaging immediately.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Cancer Risk Analysis ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Unexplained weight loss and persistent lump
+    test_symptoms = {"unexplained_weight_loss", "persistent_lump_or_thickening"}
+    
+    report = cancer_risk_algorithm(test_symptoms, {})
+
+    print("Condition: {0}".format(report['condition']))
+    print("Priority: {0}".format(report['priority_level']))
+    print("Status: {0}".format(report['status']))
+    print("\n[ONCOLOGY CARE PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+# Nevora AI - Module: Cholera (Acute Watery Diarrhea) Monitoring
+import datetime
+
+def cholera_algorithm(symptoms_input, vitals_input):
+    """
+    Logic for Cholera detection based on Images 113 to 115.
+    Focuses on rapid dehydration and 'rice-water' stool patterns.
+    """
+    result = {
+        "condition": "Gastrointestinal Health",
+        "status": "Observation",
+        "risk_level": "Low",
+        "actions": []
+    }
+
+    # Core Symptoms from Images 113 & 114
+    cholera_signs = {
+        "profuse_watery_diarrhea", "rice_water_stools", "rapid_heart_rate",
+        "loss_of_skin_elasticity", "extreme_thirst", "muscle_cramps",
+        "sunken_eyes", "low_blood_pressure"
+    }
+
+    # Detection logic
+    detected_signs = symptoms_input.intersection(cholera_signs)
+    
+    if "profuse_watery_diarrhea" in detected_signs or "rice_water_stools" in detected_signs:
+        result["condition"] = "CHOLERA SUSPECTED"
+        result["risk_level"] = "CRITICAL"
+        result["status"] = "SEVERE DEHYDRATION RISK"
+
+        result.update({
+            "actions": [
+                "1. REHYDRATION (ORS): Immediate and frequent administration of Oral Rehydration Solution (Image 114).",
+                "2. ZINC SUPPLEMENTS: Recommended for children to reduce diarrhea duration.",
+                "3. IV FLUIDS: If the patient is unable to drink or in shock, immediate intravenous fluids are required.",
+                "4. ANTIBIOTICS: Severe cases may require antibiotics to shorten the illness duration.",
+                "5. HYGIENE: Strictly use boiled or treated water for drinking and washing (Image 115).",
+                "6. MONITORING: Track urine output and blood pressure every 30 minutes until stable."
+            ]
+        })
+
+        if "low_blood_pressure" in detected_signs or "sunken_eyes" in detected_signs:
+            result["actions"].insert(0, "EMERGENCY: Patient shows signs of hypovolemic shock. Transport to hospital immediately.")
+
+    return result
+
+if __name__ == "__main__":
+    now = datetime.datetime.now()
+    
+    print("--- Nevora AI: Cholera Emergency Module ---")
+    print("Log Time: {0}\n".format(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+    # Test Case: Rice water stools and extreme thirst
+    test_symptoms = {"rice_water_stools", "extreme_thirst", "muscle_cramps"}
+    test_vitals = {"bp_systolic": 90, "heart_rate": 110}
+    
+    report = cholera_algorithm(test_symptoms, test_vitals)
+
+    print("Condition: {0}".format(report['condition']))
+    print("Risk Level: {0}".format(report['risk_level']))
+    print("Status: {0}".format(report['status']))
+    print("\n[CHOLERA EMERGENCY PROTOCOL]:")
+    for step in report['actions']:
+        print("- {0}".format(step))
+# -*- coding: utf-8 -*-
+"""
+Nevora AI Alpha - Integrated Anatomy & Pathology Core
+Source: BD Chaurasia (Anatomy) + Pathology Illustrated
+Founder: Kunal Sonawane | Kunal Tech
+"""
+
+import datetime
+
+class NevoraPathologyCore:
+    def __init__(self):
+        self.brain_version = "Alpha 5.0 (Medical Expert)"
+        
+    def path_logic_engine(self, data):
+        """
+        Anatomy + Pathology + Clinical Symptoms Integration.
+        """
+        region = data.get('region')
+        symptom = data.get('symptom')
+        duration = data.get('duration', 'acute') # acute vs chronic
+        
+        diagnosis = {
+            "anatomical_site": "Unknown",
+            "pathological_process": "General",
+            "risk_category": "Standard",
+            "action": "Basic Monitoring"
+        }
+
+        # --- 1. CARDIOVASCULAR PATHOLOGY (Pathology Illustrated Ch. 4) ---
+        if region == "chest" and "crushing_pain" in symptom:
+            diagnosis.update({
+                "anatomical_site": "Myocardium (Heart Muscle)",
+                "pathological_process": "Infarction (Tissue Death due to Ischemia)",
+                "risk_category": "CRITICAL",
+                "action": "Immediate ECG, Troponin-T test, and Morphine/Oxygen protocol."
+            })
+
+        # --- 2. RESPIRATORY PATHOLOGY (Pathology Illustrated Ch. 6) ---
+        elif region == "lungs" and "bloody_sputum" in symptom:
+            diagnosis.update({
+                "anatomical_site": "Pulmonary Parenchyma",
+                "pathological_process": "Chronic Inflammation / Neoplasia",
+                "risk_category": "HIGH (Urgent)",
+                "action": "Chest X-Ray and Sputum Cytology for Tuberculosis or Carcinoma check."
+            })
+
+        # --- 3. GASTROINTESTINAL PATHOLOGY ---
+        elif region == "abdomen" and "rice_water_stools" in symptoms:
+            diagnosis.update({
+                "anatomical_site": "Small Intestine (Mucosa)",
+                "pathological_process": "Acute Bacterial Enterotoxin (V. Cholerae)",
+                "risk_category": "EMERGENCY",
+                "action": "Aggressive Fluid Resuscitation and Electrolyte balancing."
+            })
+
+        # --- 4. ONCOLOGY / NEOPLASIA (Pathology Illustrated Ch. 2) ---
+        elif "unexplained_weight_loss" in symptom and "persistent_lump" in symptom:
+            diagnosis.update({
+                "anatomical_site": "Systemic / Localized Tissue",
+                "pathological_process": "Malignant Neoplasia (Cancer)",
+                "risk_category": "URGENT",
+                "action": "Biopsy (Histopathology) is mandatory for staging and grading."
+            })
+
+        # --- 5. RENAL PATHOLOGY ---
+        elif region == "kidney" and "blood_in_urine" in symptom:
+            diagnosis.update({
+                "anatomical_site": "Glomerulus / Nephron",
+                "pathological_process": "Glomerulonephritis or Calculi",
+                "risk_category": "LEVEL-2",
+                "action": "Urinalysis and Renal Ultrasound."
+            })
+
+        return diagnosis
+
+# --- Master Execution ---
+if __name__ == "__main__":
+    nevora_brain = NevoraPathologyCore()
+    
+    # Case Test: Pathology of Cancer (Based on shared data)
+    patient_case = {
+        "region": "lymph_node",
+        "symptom": ["persistent_lump", "unexplained_weight_loss"],
+        "duration": "chronic"
+    }
+    
+    final_report = nevora_brain.path_logic_engine(patient_case)
+    
+    print("\n" + "="*50)
+    print("      NEVORA AI ALPHA - PATHOLOGY REPORT")
+    print("="*50)
+    print("Site      : {}".format(final_report['anatomical_site']))
+    print("Process   : {}".format(final_report['pathological_process']))
+    print("Risk Level: {}".format(final_report['risk_category']))
+    print("Protocol  : {}".format(final_report['action']))
+    print("="*50)
+# -*- coding: utf-8 -*-
+"""
+Nevora AI Alpha - Anatomy & Physiology Master Brain
+Source: BD Chaurasia Handbook of General Anatomy
+Founder: Kunal Sonawane | Kunal Tech
+"""
+
+import datetime
+
+class NevoraAnatomyCore:
+    def __init__(self):
+        self.system_name = "Nevora Alpha Anatomy Logic"
+        self.reference = "BD Chaurasia 4th Ed"
+
+    def anatomical_triage(self, region, observation):
+        """
+        BD Chaurasia नुसार शरीराच्या भागांचे आणि समस्यांचे लॉजिक.
+        """
+        # Skeletal & Muscular Module (Chapter 2 & 3)
+        if region == "limbs" and "deformity" in observation:
+            return {
+                "system": "Skeletal System",
+                "risk": "Fracture / Dislocation",
+                "action": "Immobilize limb and check for neurovascular integrity."
+            }
+
+        # Cardiovascular Module (Chapter 5)
+        elif region == "thorax" and "radiating_pain" in observation:
+            return {
+                "system": "Circulatory System (Heart)",
+                "risk": "Myocardial Infarction (MI)",
+                "action": "Immediate ECG, check radial pulse and blood pressure."
+            }
+
+        # Nervous System Module (Chapter 8)
+        elif region == "head" and "loss_of_balance" in observation:
+            return {
+                "system": "Nervous System (CNS)",
+                "risk": "Cerebellar Stroke / Concussion",
+                "action": "Perform GCS (Glasgow Coma Scale) assessment."
+            }
+
+        # Gastro/Abdomen Module (BD Chaurasia Viscera logic)
+        elif region == "abdomen" and "rebound_tenderness" in observation:
+            return {
+                "system": "Digestive System (Viscera)",
+                "risk": "Acute Appendicitis / Peritonitis",
+                "action": "NPO (Nothing by Mouth) and urgent surgical consult."
+            }
+
+        return {"system": "General", "risk": "Low", "action": "Routine observation."}
+
+    def execute_diagnosis(self, patient_data):
+        try:
+            region = patient_packet.get('body_region')
+            symptom = patient_packet.get('symptom')
+            
+            # Anatomy-based logical reasoning
+            reasoning = self.anatomical_triage(region, symptom)
+            
+            report = {
+                "timestamp": datetime.datetime.now().strftime("%H:%M:%S"),
+                "anatomical_region": region.upper(),
+                "suspected_system": reasoning['system'],
+                "potential_danger": reasoning['risk'],
+                "medical_protocol": reasoning['action']
+            }
+            return report
+        except Exception as e:
+            return {"error": "Logic Mismatch: " + str(e)}
+
+# --- Simulated Deployment ---
+if __name__ == "__main__":
+    nevora_brain = NevoraAnatomyCore()
+    
+    # Case: A patient with chest pain (Thorax region)
+    patient_packet = {
+        "body_region": "thorax",
+        "symptom": "radiating_pain"
+    }
+    
+    final_output = nevora_brain.execute_diagnosis(patient_packet)
+    
+    print("--- NEVORA AI ALPHA: ANATOMICAL REASONING ---")
+    for key, value in final_output.items():
+        print("{}: {}".format(key, value))
